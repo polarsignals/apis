@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package polarsignals.featureflag;
+option go_package = "github.com/polarsignals/polarsignals/gen/go/featureflag";
+
+import "google/api/annotations.proto";
+
+service FeatureFlag {
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+  }
+
+  rpc AddUserFlag(AddUserFlagRequest) returns (AddUserFlagResponse) {
+    option (google.api.http) = {
+      post: "/v1/users/{id}/{flag}"
+    };
+  }
+
+  rpc RemoveUserFlag(RemoveUserFlagRequest) returns (RemoveUserFlagResponse) {
+    option (google.api.http) = {
+      delete: "/v1/users/{id}"
+    };
+  }
+
+  rpc ListUserFlags(ListUserFlagsRequest) returns (ListUserFlagsResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}"
+    };
+  }
+
+  rpc FlagEnabled(FlagEnabledRequest) returns (FlagEnabledResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}/{flag}"
+    };
+  }
+
+  rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse) {
+    option (google.api.http) = {
+      get: "/v1/flags"
+    };
+  }
+
+  rpc AddFlag(AddFlagRequest) returns (AddFlagResponse) {
+    option (google.api.http) = {
+      post: "/v1/flags/{name}"
+    };
+  }
+
+  rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
+    option (google.api.http) = {
+      delete: "/v1/flags/{name}"
+    };
+  }
+
+}
+
+message ListFlagsRequest {
+    // pagination
+    string page_token      = 1;
+    int32 page_size        = 2;
+}
+
+message ListFlagsResponse {
+    // pagination if empty no more pages exist
+    string next_page_token = 1;
+
+    repeated string flags = 2;
+}
+
+message FlagEnabledRequest {
+    string id   = 1;
+    string flag = 2;
+}
+
+message FlagEnabledResponse {
+    bool enabled = 1;
+}
+
+message ListUserFlagsRequest {
+    // id for the user to list flags
+    string id = 1;
+
+    string page_token      = 2;
+    int32 page_size        = 3;
+}
+
+message ListUserFlagsResponse {
+    // flags enabled for the user
+    repeated string flags = 1;
+
+    string next_page_token = 2;
+}
+
+message RemoveUserFlagRequest {
+    string id = 1;
+    string flag = 2;
+}
+
+message RemoveUserFlagResponse {}
+
+message DeleteFlagRequest {
+    string name = 1;
+}
+
+message DeleteFlagResponse {}
+
+message AddFlagRequest {
+    string name = 1;
+}
+
+message AddFlagResponse {}
+
+message AddUserFlagRequest {
+    // id of the user to add
+    string id = 1;
+
+    // flag to add to the user
+    string flag = 2;
+}
+
+message AddUserFlagResponse {}
+
+message User {
+  // id is the id of the user
+  string id             = 1;
+  string name           = 2;
+  string email          = 3;
+  string company        = 4;
+  // flags are the currently enabled flags for this user
+  repeated string flags = 5;
+}
+
+message ListUsersRequest {
+    // pagination
+    string page_token      = 1;
+    int32 page_size        = 2;
+}
+
+message ListUsersResponse {
+    // pagination if empty no more pages exist
+    string next_page_token = 1;
+
+    repeated User users = 2;
+    int32 total = 3; // total number of records
+}
