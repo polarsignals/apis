@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package polarsignals.billing;
+option go_package = "github.com/polarsignals/polarsignals/gen/go/billing";
+
+import "google/api/annotations.proto";
+
+service Billing {
+  rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
+    option(google.api.http) = {
+      get: "/v1/config"
+    };
+  }
+
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1/sessions"
+      body: "*"
+    };
+  }
+
+  rpc GetInvoicesUpcoming(GetInvoicesUpcomingRequest) returns (GetInvoicesUpcomingResponse) {
+    option (google.api.http) = {
+      get: "/v1/invoices/upcoming/{organization_id}"
+    };
+  }
+
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
+    option (google.api.http) = {
+      delete: "/v1/subscriptions/{organization_id}"
+    };
+  }
+}
+
+message GetConfigRequest{}
+message GetConfigResponse{
+  string publishable_key = 1;
+}
+
+message CreateSessionRequest {
+  string organization_id = 1;
+  string price_id = 2;
+}
+
+message CreateSessionResponse {
+  string session_id = 1;
+}
+
+message GetInvoicesUpcomingRequest {
+  string organization_id = 1;
+}
+
+message GetInvoicesUpcomingResponse {
+  int32 amount_due = 1;
+  int32 amount_paid = 2;
+  int32 amount_remaining = 3;
+}
+
+message CancelSubscriptionRequest{
+  string organization_id = 1;
+}
+message CancelSubscriptionResponse{}

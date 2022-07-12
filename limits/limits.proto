@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package polarsignals.ratelimit;
+option go_package = "github.com/polarsignals/polarsignals/gen/go/limits";
+
+import "google/api/annotations.proto";
+
+service Limits {
+
+  rpc AddLimit(AddLimitRequest) returns (AddLimitResponse) {
+    option (google.api.http) = {
+      post: "/v1/{organization_id}/{name}"
+      body: "*"
+    };
+  }
+
+  rpc GetLimit(GetLimitRequest) returns (GetLimitResponse) {
+    option (google.api.http) = {
+      get: "/v1/{organization_id}/{name}"
+    };
+  }
+
+  rpc UpdateLimit(UpdateLimitRequest) returns (UpdateLimitResponse) {
+    option (google.api.http) = {
+      patch: "/v1/{organization_id}/{name}"
+      body: "*"
+    };
+  }
+
+  rpc DeleteLimit(DeleteLimitRequest) returns (DeleteLimitResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{organization_id}/{name}"
+    };
+  }
+
+  rpc ListLimits(ListLimitsRequest) returns (ListLimitsRequest) {
+    option (google.api.http) = {
+      get: "/v1/{organization_id}"
+    };
+  }
+
+  rpc GetLimitFromProject(GetLimitFromProjectRequest) returns (GetLimitFromProjectResponse) {
+    option (google.api.http) = {
+      get: "/v1/{project_id}/{name}"
+    };
+  }
+}
+
+message GetLimitFromProjectRequest {
+    string project_id = 1;
+    string name       = 2;
+}
+
+message GetLimitFromProjectResponse {
+    Limit limit = 1;
+}
+
+message Limit {
+    string name  = 1;
+    float  limit = 2;
+    int32  burst = 3;
+}
+
+message AddLimitRequest {
+    string organization_id = 1;
+    string name         = 2;
+    Limit limit         = 3;
+}
+
+message AddLimitResponse {}
+
+message GetLimitRequest {
+    string organization_id = 1;
+    string name            = 2;
+}
+
+message GetLimitResponse {
+    Limit limit = 1;
+}
+
+message UpdateLimitRequest {
+    string organization_id = 1;
+    string name            = 2;
+    Limit limit            = 3;
+}
+
+message UpdateLimitResponse {}
+
+message DeleteLimitRequest {
+    string organization_id = 1;
+    string name            = 2;
+}
+
+message DeleteLimitResponse {}
+
+message ListLimitsRequest {
+    string organization_id = 1;
+    string page_token      = 2;
+    int32  page_size       = 3;
+}
+
+message ListLimitsResponse {
+    string next_page_token = 1;
+    repeated Limit limits  = 2;
+}
