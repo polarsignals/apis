@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package polarsignals.share;
+option go_package = "github.com/polarsignals/polarsignals/gen/go/share";
+
+// Service that exposes APIs for sharing profiles.
+service Share {
+  // Uploads the profile and returns the link that can be used to access it.
+  rpc Upload(UploadRequest) returns (UploadResponse) {}
+}
+
+// UploadRequest represents the request with profile bytes and description.
+message UploadRequest {
+    // pprof bytes of the profile to be uploaded.
+    bytes profile       = 1;
+
+    // Description of the profile.
+    string description  = 2;
+}
+
+// UploadResponse represents the response with the link that can be used to access the profile.
+message UploadResponse {
+    // id of the uploaded profile.
+    string id = 1;
+
+    // link that can be used to access the profile.
+    string link = 2;
+}
