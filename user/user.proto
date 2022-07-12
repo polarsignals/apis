@@ -1,0 +1,45 @@
+syntax = "proto3";
+
+package polarsignals.user;
+option go_package = "github.com/polarsignals/polarsignals/gen/go/user";
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+service Users {
+  rpc GetSelf(GetSelfRequest) returns (GetSelfResponse) {
+    option (google.api.http) = {
+      get: "/v1/self"
+    };
+  }
+
+  rpc UpdateSelf(UpdateSelfRequest) returns (UpdateSelfResponse) {
+    option (google.api.http) = {
+      patch: "/v1/self"
+      body: "*"
+    };
+  }
+}
+
+message User {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+  string company = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  google.protobuf.Timestamp updatedAt = 6;
+}
+
+message GetSelfRequest {
+}
+
+message GetSelfResponse {
+  User user = 1;
+}
+
+message UpdateSelfRequest {
+  User user = 1;
+}
+
+message UpdateSelfResponse {
+}
