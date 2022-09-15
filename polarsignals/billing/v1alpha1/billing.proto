@@ -1,0 +1,87 @@
+syntax = "proto3";
+
+package polarsignals.billing.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/billing";
+
+// BillingService service provides the ability to manage billing accounts.
+service BillingService {
+  // GetConfig returns the billing configuration.
+  rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
+    option (google.api.http) = {
+      get: "/v1/config"
+    };
+  }
+
+  // CreateSession creates a new billing session.
+  rpc CreateSession(CreateSessionRequest) returns (CreateSessionResponse) {
+    option (google.api.http) = {
+      post: "/v1/sessions"
+      body: "*"
+    };
+  }
+
+  // GetInvoicesUpcoming returns the upcoming invoices.
+  rpc GetInvoicesUpcoming(GetInvoicesUpcomingRequest) returns (GetInvoicesUpcomingResponse) {
+    option (google.api.http) = {
+      get: "/v1/invoices/upcoming/{organization_id}"
+    };
+  }
+
+  // CancelSubscription cancels the subscription.
+  rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
+    option (google.api.http) = {
+      delete: "/v1/subscriptions/{organization_id}"
+    };
+  }
+}
+
+// GetConfigRequest is the request for the GetConfig method.
+message GetConfigRequest {}
+
+// GetConfigResponse is the response for the GetConfig method.
+message GetConfigResponse {
+  // Public key of the Stripe API.
+  string publishable_key = 1;
+}
+
+// CreateSessionRequest is the request for the CreateSession method.
+message CreateSessionRequest {
+  // Organization ID.
+  string organization_id = 1;
+  // Plan ID.
+  string price_id = 2;
+}
+
+// CreateSessionResponse is the response for the CreateSession method.
+message CreateSessionResponse {
+  // Session ID.
+  string session_id = 1;
+}
+
+// GetInvoicesUpcomingRequest is the request for the GetInvoicesUpcoming method.
+message GetInvoicesUpcomingRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// GetInvoicesUpcomingResponse is the response for the GetInvoicesUpcoming method.
+message GetInvoicesUpcomingResponse {
+  // Amount due of the upcoming invoice.
+  int32 amount_due = 1;
+  // The value of the paid amount of the upcoming invoice.
+  int32 amount_paid = 2;
+  // The value of the unpaid amount of the upcoming invoice.
+  int32 amount_remaining = 3;
+}
+
+// CancelSubscriptionRequest is the request for the CancelSubscription method.
+message CancelSubscriptionRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// CancelSubscriptionResponse is the response for the CancelSubscription method.
+message CancelSubscriptionResponse {}

@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+package polarsignals.user.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/user";
+
+// UserService provides the ability to manage users.
+service UserService {
+  // GetSelf returns the user information for the authenticated user.
+  rpc GetSelf(GetSelfRequest) returns (GetSelfResponse) {
+    option (google.api.http) = {
+      get: "/v1/self"
+    };
+  }
+
+  // UpdateSelf updates the user information for the authenticated user.
+  rpc UpdateSelf(UpdateSelfRequest) returns (UpdateSelfResponse) {
+    option (google.api.http) = {
+      patch: "/v1/self"
+      body: "*"
+    };
+  }
+}
+
+// User represents a user.
+message User {
+  // The unique identifier of the user.
+  string id = 1;
+  // The name of the user.
+  string name = 2;
+  // The email address of the user.
+  string email = 3;
+  // The company of the user.
+  string company = 4;
+  // The time when the user was created.
+  google.protobuf.Timestamp created_at = 5;
+  // The time when the user was last updated.
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+// GetSelfRequest is the request for the GetSelf method.
+message GetSelfRequest {}
+
+// GetSelfResponse is the response for the GetSelf method.
+message GetSelfResponse {
+  // The user information.
+  User user = 1;
+}
+
+// UpdateSelfRequest is the request for the UpdateSelf method.
+message UpdateSelfRequest {
+  // The user information to update.
+  User user = 1;
+}
+
+// UpdateSelfResponse is the response for the UpdateSelf method.
+message UpdateSelfResponse {}

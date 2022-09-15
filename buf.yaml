@@ -3,8 +3,10 @@ name: buf.build/polarsignals/api
 deps:
   - buf.build/googleapis/googleapis
   - buf.build/grpc-ecosystem/grpc-gateway
-  - buf.build/parca-dev/parca
 lint:
+  allow_comment_ignores: true
   use:
-    - DEFAULT
+    - DEFAULT # MINIMAL, BASIC
     - COMMENTS
+  ignore:
+    - polarsignals/storage/v1alpha1/arrow/format/Flight.proto

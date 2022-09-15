@@ -9,7 +9,3 @@ deps:
     owner: grpc-ecosystem
     repository: grpc-gateway
     commit: bc28b723cd774c32b6fbc77621518765
-  - remote: buf.build
-    owner: parca-dev
-    repository: parca
-    commit: d794f8e3073b4efe8d85855707b245c8

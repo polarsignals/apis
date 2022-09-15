@@ -1,0 +1,230 @@
+syntax = "proto3";
+
+package polarsignals.organization.v1alpha1;
+
+import "google/api/annotations.proto";
+import "polarsignals/user/v1alpha1/user.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/organization";
+
+// OrganizationService provides the ability to manage organizations.
+service OrganizationService {
+  // GetOrganization returns the organization with the given ID.
+  rpc GetOrganizations(GetOrganizationsRequest) returns (GetOrganizationsResponse) {
+    option (google.api.http) = {
+      get: "/v1"
+    };
+  }
+
+  // CreateOrganization creates a new organization.
+  rpc CreateOrganization(CreateOrganizationRequest) returns (CreateOrganizationResponse) {
+    option (google.api.http) = {
+      post: "/v1"
+      body: "*"
+    };
+  }
+
+  // GetOrganization returns the organization with the given ID.
+  rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
+    option (google.api.http) = {
+      get: "/v1/{id}"
+    };
+  }
+
+  // UpdateOrganization updates the organization with the given ID.
+  rpc UpdateOrganization(UpdateOrganizationRequest) returns (UpdateOrganizationResponse) {
+    option (google.api.http) = {
+      patch: "/v1/{id}"
+      body: "*"
+    };
+  }
+
+  // DeleteOrganization deletes the organization with the given ID.
+  rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{id}"
+    };
+  }
+
+  // GetOrganizationUsers returns the users of the organization with the given ID.
+  rpc GetOrganizationUsers(GetOrganizationUsersRequest) returns (GetOrganizationUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1/{id}/users"
+    };
+  }
+
+  // AddORganizationUser adds a user to the organization with the given ID.
+  rpc AddOrganizationUser(AddOrganizationUserRequest) returns (AddOrganizationUserResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/users"
+      body: "*"
+    };
+  }
+
+  // RemoveOrganizationUser removes a user from the organization with the given ID.
+  rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{id}/users"
+    };
+  }
+
+  // IsInviteTokenValid checks if the given invite token is valid.
+  rpc IsInviteTokenValid(IsInviteTokenValidRequest) returns (IsInviteTokenValidResponse) {
+    option (google.api.http) = {
+      post: "/v1/invite-token-validity/{token}"
+    };
+  }
+
+  // AcceptInviteToken accepts the given invite token.
+  rpc AcceptInviteToken(AcceptInviteTokenRequest) returns (AcceptInviteTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/accept-invite-token/{token}"
+      body: "*"
+    };
+  }
+
+  // GetInviteToken returns the invite token with the given ID.
+  rpc GetInviteTokens(GetInviteTokensRequest) returns (GetInviteTokensResponse) {
+    option (google.api.http) = {
+      get: "/v1/{id}/invite-tokens"
+    };
+  }
+}
+
+// Organization represents an organization.
+message Organization {
+  // The ID of the organization.
+  string id = 1;
+  // The name of the organization.
+  string name = 2;
+}
+
+// InviteToken represents an invite token.
+message InviteToken {
+  // The ID of the invite token.
+  string id = 1;
+  // The ID of the organization.
+  string organization_id = 2;
+  // The role of the user.
+  string role = 3;
+}
+
+// GetOrganizationsRequest is the request for the GetOrganizations method.
+message GetOrganizationsRequest {}
+
+// GetOrganizationsResponse is the response for the GetOrganizations method.
+message GetOrganizationsResponse {
+  // The organizations.
+  repeated Organization organizations = 1;
+}
+
+// CreateOrganizationRequest is the request for the CreateOrganization method.
+message CreateOrganizationRequest {
+  // The name of the organization.
+  string name = 1;
+}
+
+// CreateOrganizationResponse is the response for the CreateOrganization method.
+message CreateOrganizationResponse {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// GetOrganizationRequest is the request for the GetOrganization method.
+message GetOrganizationRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// GetOrganizationResponse is the response for the GetOrganization method.
+message GetOrganizationResponse {
+  // The organization.
+  Organization organization = 1;
+}
+
+// UpdateOrganizationRequest is the request for the UpdateOrganization method.
+message UpdateOrganizationRequest {
+  // The ID of the organization.
+  string id = 1;
+  // The name of the organization.
+  string name = 2;
+}
+
+// UpdateOrganizationResponse is the response for the UpdateOrganization method.
+message UpdateOrganizationResponse {}
+
+// DeleteOrganizationRequest is the request for the DeleteOrganization method.
+message DeleteOrganizationRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// DeleteOrganizationResponse is the response for the DeleteOrganization method.
+message DeleteOrganizationResponse {}
+
+// GetOrganizationUsersRequest is the request for the GetOrganizationUsers method.
+message GetOrganizationUsersRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// GetOrganizationUsersResponse is the response for the GetOrganizationUsers method.
+message GetOrganizationUsersResponse {
+  // The users.
+  repeated polarsignals.user.v1alpha1.User users = 1;
+}
+
+// AddOrganizationUserRequest is the request for the AddOrganizationUser method.
+message AddOrganizationUserRequest {
+  // The ID of the organization.
+  string id = 1;
+  // The ID of the user.
+  string email = 2;
+}
+
+// AddOrganizationUserResponse is the response for the AddOrganizationUser method.
+message AddOrganizationUserResponse {}
+
+// RemoveOrganizationUserRequest is the request for the RemoveOrganizationUser method.
+message RemoveOrganizationUserRequest {
+  // The ID of the organization.
+  string id = 1;
+  // The ID of the user.
+  string user_id = 2;
+}
+
+// RemoveOrganizationUserResponse is the response for the RemoveOrganizationUser method.
+message RemoveOrganizationUserResponse {}
+
+// IsInviteTokenValidRequest is the request for the IsInviteTokenValid method.
+message IsInviteTokenValidRequest {
+  // The invite token.
+  string token = 1;
+}
+
+// IsInviteTokenValidResponse is the response for the IsInviteTokenValid method.
+message IsInviteTokenValidResponse {
+  // The organization name.
+  string organization_name = 1;
+}
+
+// AcceptInviteTokenRequest is the request for the AcceptInviteToken method.
+message AcceptInviteTokenRequest {
+  // The invite token.
+  string token = 1;
+}
+
+// AcceptInviteTokenResponse is the response for the AcceptInviteToken method.
+message AcceptInviteTokenResponse {}
+
+// GetInviteTokensRequest is the request for the GetInviteTokens method.
+message GetInviteTokensRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// GetInviteTokensResponse is the response for the GetInviteTokens method.
+message GetInviteTokensResponse {
+  // The invite tokens.
+  repeated InviteToken invite_tokens = 1;
+}

@@ -1,0 +1,190 @@
+syntax = "proto3";
+
+package polarsignals.project.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/project";
+
+// ProjectService provides the ability to manage projects.
+service ProjectService {
+  // GetProjects returns the project with the given ID.
+  rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse) {
+    option (google.api.http) = {
+      get: "/v1"
+    };
+  }
+
+  // CreateProject creates a new project.
+  rpc CreateProject(CreateProjectRequest) returns (CreateProjectResponse) {
+    option (google.api.http) = {
+      post: "/v1"
+      body: "*"
+    };
+  }
+
+  // GetProject returns the project with the given ID.
+  rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
+    option (google.api.http) = {
+      get: "/v1/{id}"
+    };
+  }
+
+  // UpdateProject updates the project with the given ID.
+  rpc UpdateProject(UpdateProjectRequest) returns (UpdateProjectResponse) {
+    option (google.api.http) = {
+      patch: "/v1/{id}"
+      body: "*"
+    };
+  }
+
+  // DeleteProject deletes the project with the given ID.
+  rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{id}"
+    };
+  }
+
+  // GetProjectTokens returns the tokens for the project with the given ID.
+  rpc GetProjectTokens(GetProjectTokensRequest) returns (GetProjectTokensResponse) {
+    option (google.api.http) = {
+      get: "/v1/{id}/tokens"
+    };
+  }
+
+  // CreateProjectToken creates a new token for the project with the given ID.
+  rpc CreateProjectToken(CreateProjectTokenRequest) returns (CreateProjectTokenResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/tokens"
+      body: "*"
+    };
+  }
+
+  // DeleteProjectToken deletes the token with the given ID.
+  rpc DeleteProjectToken(DeleteProjectTokenRequest) returns (DeleteProjectTokenResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{id}/tokens"
+    };
+  }
+}
+
+// Project represents a project.
+message Project {
+  // The ID of the project.
+  string id = 1;
+  // The name of the project.
+  string name = 2;
+}
+
+// Organization represents an organization.
+message Organization {
+  // The ID of the organization.
+  string id = 1;
+  // The name of the organization.
+  string name = 2;
+  // The projects of the organization.
+  repeated Project projects = 3;
+}
+
+// Token represents a token.
+message Token {
+  // The ID of the token.
+  string id = 1;
+  // The name of the token.
+  string name = 2;
+  // The time the token was created.
+  google.protobuf.Timestamp created_at = 3;
+}
+
+// GetProjectsRequest is the request for the GetProjects method.
+message GetProjectsRequest {}
+
+// GetProjectsResponse is the response for the GetProjects method.
+message GetProjectsResponse {
+  // The organizations.
+  repeated Organization organizations = 1;
+}
+
+// CreateProjectRequest is the request for the CreateProject method.
+message CreateProjectRequest {
+  // The name of the project.
+  string name = 1;
+  // The ID of the organization.
+  string organization_id = 2;
+}
+
+// CreateProjectResponse is the response for the CreateProject method.
+message CreateProjectResponse {
+  // The ID of the project.
+  string id = 1;
+}
+
+// GetProjectRequest is the request for the GetProject method.
+message GetProjectRequest {
+  // The ID of the project.
+  string id = 1;
+}
+
+// GetProjectResponse is the response for the GetProject method.
+message GetProjectResponse {
+  // The project.
+  Project project = 1;
+}
+
+// UpdateProjectRequest is the request for the UpdateProject method.
+message UpdateProjectRequest {
+  // The ID of the project.
+  string id = 1;
+  // The name of the project.
+  string name = 2;
+}
+
+// UpdateProjectResponse is the response for the UpdateProject method.
+message UpdateProjectResponse {}
+
+// DeleteProjectRequest is the request for the DeleteProject method.
+message DeleteProjectRequest {
+  // The ID of the project.
+  string id = 1;
+}
+
+// DeleteProjectResponse is the response for the DeleteProject method.
+message DeleteProjectResponse {}
+
+// GetProjectTokensRequest is the request for the GetProjectTokens method.
+message GetProjectTokensRequest {
+  // The ID of the project.
+  string id = 1;
+}
+
+// GetProjectTokensResponse is the response for the GetProjectTokens method.
+message GetProjectTokensResponse {
+  // The tokens.
+  repeated Token tokens = 1;
+}
+
+// CreateProjectTokenRequest is the request for the CreateProjectToken method.
+message CreateProjectTokenRequest {
+  // The ID of the project.
+  string id = 1;
+  // The name of the token.
+  string name = 2;
+}
+
+// CreateProjectTokenResponse is the response for the CreateProjectToken method.
+message CreateProjectTokenResponse {
+  // The token.
+  string token = 1;
+}
+
+// DeleteProjectTokenRequest is the request for the DeleteProjectToken method.
+message DeleteProjectTokenRequest {
+  // The ID of the project.
+  string id = 1;
+  // The ID of the token.
+  string token_id = 2;
+}
+
+// DeleteProjectTokenResponse is the response for the DeleteProjectToken method.
+message DeleteProjectTokenResponse {}

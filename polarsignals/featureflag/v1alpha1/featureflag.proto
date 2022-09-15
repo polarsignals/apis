@@ -1,0 +1,186 @@
+syntax = "proto3";
+
+package polarsignals.featureflag.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/featureflag";
+
+// FeatureFlagService provides the ability to manage feature flags.
+service FeatureFlagService {
+  // ListFeatureFlags returns a list of feature flags.
+  rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
+    option (google.api.http) = {
+      get: "/v1/users"
+    };
+  }
+
+  // AddUserFlag adds a new feature flag to a user.
+  rpc AddUserFlag(AddUserFlagRequest) returns (AddUserFlagResponse) {
+    option (google.api.http) = {
+      post: "/v1/users/{id}/{flag}"
+    };
+  }
+
+  // RemoveUserFlag removes a feature flag from a user.
+  rpc RemoveUserFlag(RemoveUserFlagRequest) returns (RemoveUserFlagResponse) {
+    option (google.api.http) = {
+      delete: "/v1/users/{id}"
+    };
+  }
+
+  // ListUserFlags returns a list of feature flags for a user.
+  rpc ListUserFlags(ListUserFlagsRequest) returns (ListUserFlagsResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}"
+    };
+  }
+
+  // FlagEnabled returns true if the feature flag is enabled for the user.
+  rpc FlagEnabled(FlagEnabledRequest) returns (FlagEnabledResponse) {
+    option (google.api.http) = {
+      get: "/v1/users/{id}/{flag}"
+    };
+  }
+
+  // ListFlags returns a list of feature flags.
+  rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse) {
+    option (google.api.http) = {
+      get: "/v1/flags"
+    };
+  }
+
+  // AddFlag adds a new feature flag.
+  rpc AddFlag(AddFlagRequest) returns (AddFlagResponse) {
+    option (google.api.http) = {
+      post: "/v1/flags/{name}"
+    };
+  }
+
+  // DeleteFlag deletes a feature flag.
+  rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
+    option (google.api.http) = {
+      delete: "/v1/flags/{name}"
+    };
+  }
+}
+
+// ListFlagsRequest is the request for the ListFlags method.
+message ListFlagsRequest {
+  // the token of the page that retrived
+  string page_token = 1;
+  // the number of items to return per page
+  int32 page_size = 2;
+}
+
+// ListFlagsResponse is the response for the ListFlags method.
+message ListFlagsResponse {
+  // token of the next page for pagination if more pages exist
+  string next_page_token = 1;
+  // the list of flags
+  repeated string flags = 2;
+}
+
+// FlagEnabledRequest is the request for the FlagEnabled method.
+message FlagEnabledRequest {
+  // the user id
+  string id = 1;
+  // the feature flag name
+  string flag = 2;
+}
+
+// FlagEnabledResponse is the response for the FlagEnabled method.
+message FlagEnabledResponse {
+  // true if the feature flag is enabled for the user
+  bool enabled = 1;
+}
+
+// ListUsersRequest is the request for the ListUsers method.
+message ListUserFlagsRequest {
+  // id for the user to list flags
+  string id = 1;
+  // pagination: the page number to return
+  string page_token = 2;
+  // pagination: the number of items to return per page
+  int32 page_size = 3;
+}
+
+// ListUserFlagsResponse is the response for the ListUserFlags method.
+message ListUserFlagsResponse {
+  // flags enabled for the user
+  repeated string flags = 1;
+  // token of the next page for pagination if more pages exist
+  string next_page_token = 2;
+}
+
+// RemoveUserFlagRequest is the request for the RemoveUserFlag method.
+message RemoveUserFlagRequest {
+  // id for the user to remove the flag from
+  string id = 1;
+  // the feature flag name
+  string flag = 2;
+}
+
+// RemoveUserFlagResponse is the response for the RemoveUserFlag method.
+message RemoveUserFlagResponse {}
+
+// AddUserFlagRequest is the request for the AddUserFlag method.
+message DeleteFlagRequest {
+  // the feature flag name
+  string name = 1;
+}
+
+// DeleteFlagResponse is the response for the DeleteFlag method.
+message DeleteFlagResponse {}
+
+// AddUserFlagRequest is the request for the AddUserFlag method.
+message AddFlagRequest {
+  // the feature flag name
+  string name = 1;
+}
+
+// AddUserFlagResponse is the response for the AddUserFlag method.
+message AddFlagResponse {}
+
+// AddUserFlagRequest is the request for the AddUserFlag method.
+message AddUserFlagRequest {
+  // id of the user to add
+  string id = 1;
+  // flag to add to the user
+  string flag = 2;
+}
+
+// AddUserFlagResponse is the response for the AddUserFlag method.
+message AddUserFlagResponse {}
+
+// User is a user of the system.
+message User {
+  // id is the id of the user
+  string id = 1;
+  // name is the name of the user
+  string name = 2;
+  // email is the email of the user
+  string email = 3;
+  // company is the company of the user
+  string company = 4;
+  // flags are the currently enabled flags for this user
+  repeated string flags = 5;
+}
+
+// ListUsersRequest is the request for the ListUsers method.
+message ListUsersRequest {
+  // the token of the page that retrived
+  string page_token = 1;
+  // the number of items to return per page
+  int32 page_size = 2;
+}
+
+// ListUsersResponse is the response for the ListUsers method.
+message ListUsersResponse {
+  // pagination if empty no more pages exist
+  string next_page_token = 1;
+  // the list of users
+  repeated User users = 2;
+  // the total number of users
+  int32 total = 3;
+}

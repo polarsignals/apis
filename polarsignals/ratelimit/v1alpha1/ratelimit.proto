@@ -1,0 +1,147 @@
+syntax = "proto3";
+
+package polarsignals.ratelimit.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/limits";
+
+// RateLimitService provides the ability to check if a request is allowed to proceed.
+service RateLimitService {
+  // AddLimit adds a new rate limit.
+  rpc AddLimit(AddLimitRequest) returns (AddLimitResponse) {
+    option (google.api.http) = {
+      post: "/v1/{organization_id}/{name}"
+      body: "*"
+    };
+  }
+
+  // GetLimit returns the rate limit for the given name.
+  rpc GetLimit(GetLimitRequest) returns (GetLimitResponse) {
+    option (google.api.http) = {
+      get: "/v1/{organization_id}/{name}"
+    };
+  }
+
+  // UpdateLimit updates the rate limit for the given name.
+  rpc UpdateLimit(UpdateLimitRequest) returns (UpdateLimitResponse) {
+    option (google.api.http) = {
+      patch: "/v1/{organization_id}/{name}"
+      body: "*"
+    };
+  }
+
+  // DeleteLimit deletes the rate limit for the given name.
+  rpc DeleteLimit(DeleteLimitRequest) returns (DeleteLimitResponse) {
+    option (google.api.http) = {
+      delete: "/v1/{organization_id}/{name}"
+    };
+  }
+
+  // ListLimits returns a list of rate limits.
+  rpc ListLimits(ListLimitsRequest) returns (ListLimitsResponse) {
+    option (google.api.http) = {
+      get: "/v1/{organization_id}"
+    };
+  }
+
+  // GetLimitFromProject returns the rate limit for the given project.
+  rpc GetLimitFromProject(GetLimitFromProjectRequest) returns (GetLimitFromProjectResponse) {
+    option (google.api.http) = {
+      get: "/v1/{project_id}/{name}"
+    };
+  }
+}
+
+// GetLimitFromProjectRequest is the request for the GetLimitFromProject method.
+message GetLimitFromProjectRequest {
+  // The project ID.
+  string project_id = 1;
+  // The name of the rate limit.
+  string name = 2;
+}
+
+// GetLimitFromProjectResponse is the response for the GetLimitFromProject method.
+message GetLimitFromProjectResponse {
+  // The rate limit.
+  Limit limit = 1;
+}
+
+// Limit represents a rate limit.
+message Limit {
+  // name is the name of the limit.
+  string name = 1;
+  // limit is the number of requests allowed per unit.
+  float limit = 2;
+  // burst is the number of requests allowed in a burst.
+  int32 burst = 3;
+}
+
+// AddLimitRequest is the request for the AddLimit method.
+message AddLimitRequest {
+  // organization_id is the ID of the organization.
+  string organization_id = 1;
+  // name is the name of the limit.
+  string name = 2;
+  // limit is the number of requests allowed per unit.
+  Limit limit = 3;
+}
+
+// AddLimitResponse is the response for the AddLimit method.
+message AddLimitResponse {}
+
+// GetLimitRequest is the request for the GetLimit method.
+message GetLimitRequest {
+  // organization_id is the ID of the organization.
+  string organization_id = 1;
+  // name is the name of the limit.
+  string name = 2;
+}
+
+// GetLimitResponse is the response for the GetLimit method.
+message GetLimitResponse {
+  // limit is the rate limit.
+  Limit limit = 1;
+}
+
+// UpdateLimitRequest is the request for the UpdateLimit method.
+message UpdateLimitRequest {
+  // organization_id is the ID of the organization.
+  string organization_id = 1;
+  // name is the name of the limit.
+  string name = 2;
+  // limit is the number of requests allowed per unit.
+  Limit limit = 3;
+}
+
+// UpdateLimitResponse is the response for the UpdateLimit method.
+message UpdateLimitResponse {}
+
+// DeleteLimitRequest is the request for the DeleteLimit method.
+message DeleteLimitRequest {
+  // organization_id is the ID of the organization.
+  string organization_id = 1;
+  // name is the name of the limit.
+  string name = 2;
+}
+
+// DeleteLimitResponse is the response for the DeleteLimit method.
+message DeleteLimitResponse {}
+
+// ListLimitsRequest is the request for the ListLimits method.
+message ListLimitsRequest {
+  // organization_id is the ID of the organization.
+  string organization_id = 1;
+  // the token to use for pagination.
+  string page_token = 2;
+  // the number of items to return per page.
+  int32 page_size = 3;
+}
+
+// ListLimitsResponse is the response for the ListLimits method.
+message ListLimitsResponse {
+  // the token of the next page.
+  string next_page_token = 1;
+  // limits is the list of rate limits.
+  repeated Limit limits = 2;
+}
