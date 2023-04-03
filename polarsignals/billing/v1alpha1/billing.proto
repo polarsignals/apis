@@ -3,6 +3,7 @@ syntax = "proto3";
 package polarsignals.billing.v1alpha1;
 
 import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/billing";
 
@@ -12,6 +13,12 @@ service BillingService {
   rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
     option (google.api.http) = {
       get: "/v1/config"
+    };
+  }
+
+  rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
+    option (google.api.http) = {
+      get: "/v1/subscriptions/{organization_id}"
     };
   }
 
@@ -45,6 +52,17 @@ message GetConfigRequest {}
 message GetConfigResponse {
   // Public key of the Stripe API.
   string publishable_key = 1;
+}
+
+message GetSubscriptionRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message GetSubscriptionResponse {
+  string id = 1;
+  string status = 2;
+  google.protobuf.Timestamp created = 3;
 }
 
 // CreateSessionRequest is the request for the CreateSession method.
