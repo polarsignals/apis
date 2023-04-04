@@ -54,6 +54,22 @@ message GetConfigResponse {
   string publishable_key = 1;
 }
 
+message Card {
+  // Card brand.
+  string brand = 1;
+  // Last 4 digits of the card.
+  string last4 = 2;
+  // Expiration month of the card.
+  int32 exp_month = 3;
+  // Expiration year of the card.
+  int32 exp_year = 4;
+}
+
+// PaymentMethod represents a payment method of a subscription.
+message PaymentMethod {
+  Card card = 1;
+}
+
 message GetSubscriptionRequest {
   // Organization ID.
   string organization_id = 1;
@@ -63,6 +79,7 @@ message GetSubscriptionResponse {
   string id = 1;
   string status = 2;
   google.protobuf.Timestamp created = 3;
+  PaymentMethod payment_method = 4;
 }
 
 // CreateSessionRequest is the request for the CreateSession method.
