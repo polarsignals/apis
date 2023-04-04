@@ -46,7 +46,10 @@ service BillingService {
 }
 
 // GetConfigRequest is the request for the GetConfig method.
-message GetConfigRequest {}
+message GetConfigRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
 
 // GetConfigResponse is the response for the GetConfig method.
 message GetConfigResponse {
