@@ -29,13 +29,6 @@ service FeatureFlagService {
     };
   }
 
-  // ListUserFlags returns a list of feature flags for a user.
-  rpc ListUserFlags(ListUserFlagsRequest) returns (ListUserFlagsResponse) {
-    option (google.api.http) = {
-      get: "/v1/users/{id}"
-    };
-  }
-
   // FlagEnabled returns true if the feature flag is enabled for the user.
   rpc FlagEnabled(FlagEnabledRequest) returns (FlagEnabledResponse) {
     option (google.api.http) = {
@@ -93,24 +86,6 @@ message FlagEnabledRequest {
 message FlagEnabledResponse {
   // true if the feature flag is enabled for the user
   bool enabled = 1;
-}
-
-// ListUsersRequest is the request for the ListUsers method.
-message ListUserFlagsRequest {
-  // id for the user to list flags
-  string id = 1;
-  // pagination: the page number to return
-  string page_token = 2;
-  // pagination: the number of items to return per page
-  int32 page_size = 3;
-}
-
-// ListUserFlagsResponse is the response for the ListUserFlags method.
-message ListUserFlagsResponse {
-  // flags enabled for the user
-  repeated string flags = 1;
-  // token of the next page for pagination if more pages exist
-  string next_page_token = 2;
 }
 
 // RemoveUserFlagRequest is the request for the RemoveUserFlag method.
