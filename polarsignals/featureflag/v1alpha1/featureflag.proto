@@ -3,6 +3,7 @@ syntax = "proto3";
 package polarsignals.featureflag.v1alpha1;
 
 import "google/api/annotations.proto";
+import "polarsignals/user/v1alpha1/user.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/featureflag";
 
@@ -128,20 +129,6 @@ message AddUserFlagRequest {
 // AddUserFlagResponse is the response for the AddUserFlag method.
 message AddUserFlagResponse {}
 
-// User is a user of the system.
-message User {
-  // id is the id of the user
-  string id = 1;
-  // name is the name of the user
-  string name = 2;
-  // email is the email of the user
-  string email = 3;
-  // company is the company of the user
-  string company = 4;
-  // flags are the currently enabled flags for this user
-  repeated string flags = 5;
-}
-
 // ListUsersRequest is the request for the ListUsers method.
 message ListUsersRequest {
   // the token of the page that retrived
@@ -155,7 +142,7 @@ message ListUsersResponse {
   // pagination if empty no more pages exist
   string next_page_token = 1;
   // the list of users
-  repeated User users = 2;
+  repeated polarsignals.user.v1alpha1.User users = 2;
   // the total number of users
   int32 total = 3;
 }
