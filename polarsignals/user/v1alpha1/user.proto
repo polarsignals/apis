@@ -11,9 +11,7 @@ option go_package = "github.com/polarsignals/polarsignals/gen/go/user";
 service UserService {
   // GetSelf returns the user information for the authenticated user.
   rpc GetSelf(GetSelfRequest) returns (GetSelfResponse) {
-    option (google.api.http) = {
-      get: "/v1/self"
-    };
+    option (google.api.http) = {get: "/v1/self"};
   }
 
   // UpdateSelf updates the user information for the authenticated user.

@@ -18,9 +18,7 @@ service RateLimitService {
 
   // GetLimit returns the rate limit for the given name.
   rpc GetLimit(GetLimitRequest) returns (GetLimitResponse) {
-    option (google.api.http) = {
-      get: "/v1/{organization_id}/{name}"
-    };
+    option (google.api.http) = {get: "/v1/{organization_id}/{name}"};
   }
 
   // UpdateLimit updates the rate limit for the given name.
@@ -33,23 +31,17 @@ service RateLimitService {
 
   // DeleteLimit deletes the rate limit for the given name.
   rpc DeleteLimit(DeleteLimitRequest) returns (DeleteLimitResponse) {
-    option (google.api.http) = {
-      delete: "/v1/{organization_id}/{name}"
-    };
+    option (google.api.http) = {delete: "/v1/{organization_id}/{name}"};
   }
 
   // ListLimits returns a list of rate limits.
   rpc ListLimits(ListLimitsRequest) returns (ListLimitsResponse) {
-    option (google.api.http) = {
-      get: "/v1/{organization_id}"
-    };
+    option (google.api.http) = {get: "/v1/{organization_id}"};
   }
 
   // GetLimitFromProject returns the rate limit for the given project.
   rpc GetLimitFromProject(GetLimitFromProjectRequest) returns (GetLimitFromProjectResponse) {
-    option (google.api.http) = {
-      get: "/v1/{project_id}/{name}"
-    };
+    option (google.api.http) = {get: "/v1/{project_id}/{name}"};
   }
 }
 

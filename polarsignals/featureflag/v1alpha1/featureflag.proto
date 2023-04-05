@@ -11,51 +11,37 @@ option go_package = "github.com/polarsignals/polarsignals/gen/go/featureflag";
 service FeatureFlagService {
   // ListFeatureFlags returns a list of feature flags.
   rpc ListUsers(ListUsersRequest) returns (ListUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1/users"
-    };
+    option (google.api.http) = {get: "/v1/users"};
   }
 
   // AddUserFlag adds a new feature flag to a user.
   rpc AddUserFlag(AddUserFlagRequest) returns (AddUserFlagResponse) {
-    option (google.api.http) = {
-      post: "/v1/users/{id}/{flag}"
-    };
+    option (google.api.http) = {post: "/v1/users/{id}/{flag}"};
   }
 
   // RemoveUserFlag removes a feature flag from a user.
   rpc RemoveUserFlag(RemoveUserFlagRequest) returns (RemoveUserFlagResponse) {
-    option (google.api.http) = {
-      delete: "/v1/users/{id}"
-    };
+    option (google.api.http) = {delete: "/v1/users/{id}"};
   }
 
   // FlagEnabled returns true if the feature flag is enabled for the user.
   rpc FlagEnabled(FlagEnabledRequest) returns (FlagEnabledResponse) {
-    option (google.api.http) = {
-      get: "/v1/users/{id}/{flag}"
-    };
+    option (google.api.http) = {get: "/v1/users/{id}/{flag}"};
   }
 
   // ListFlags returns a list of feature flags.
   rpc ListFlags(ListFlagsRequest) returns (ListFlagsResponse) {
-    option (google.api.http) = {
-      get: "/v1/flags"
-    };
+    option (google.api.http) = {get: "/v1/flags"};
   }
 
   // AddFlag adds a new feature flag.
   rpc AddFlag(AddFlagRequest) returns (AddFlagResponse) {
-    option (google.api.http) = {
-      post: "/v1/flags/{name}"
-    };
+    option (google.api.http) = {post: "/v1/flags/{name}"};
   }
 
   // DeleteFlag deletes a feature flag.
   rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
-    option (google.api.http) = {
-      delete: "/v1/flags/{name}"
-    };
+    option (google.api.http) = {delete: "/v1/flags/{name}"};
   }
 }
 

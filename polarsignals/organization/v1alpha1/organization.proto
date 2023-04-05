@@ -11,9 +11,7 @@ option go_package = "github.com/polarsignals/polarsignals/gen/go/organization";
 service OrganizationService {
   // GetOrganization returns the organization with the given ID.
   rpc GetOrganizations(GetOrganizationsRequest) returns (GetOrganizationsResponse) {
-    option (google.api.http) = {
-      get: "/v1"
-    };
+    option (google.api.http) = {get: "/v1"};
   }
 
   // CreateOrganization creates a new organization.
@@ -26,9 +24,7 @@ service OrganizationService {
 
   // GetOrganization returns the organization with the given ID.
   rpc GetOrganization(GetOrganizationRequest) returns (GetOrganizationResponse) {
-    option (google.api.http) = {
-      get: "/v1/{id}"
-    };
+    option (google.api.http) = {get: "/v1/{id}"};
   }
 
   // UpdateOrganization updates the organization with the given ID.
@@ -41,16 +37,12 @@ service OrganizationService {
 
   // DeleteOrganization deletes the organization with the given ID.
   rpc DeleteOrganization(DeleteOrganizationRequest) returns (DeleteOrganizationResponse) {
-    option (google.api.http) = {
-      delete: "/v1/{id}"
-    };
+    option (google.api.http) = {delete: "/v1/{id}"};
   }
 
   // GetOrganizationUsers returns the users of the organization with the given ID.
   rpc GetOrganizationUsers(GetOrganizationUsersRequest) returns (GetOrganizationUsersResponse) {
-    option (google.api.http) = {
-      get: "/v1/{id}/users"
-    };
+    option (google.api.http) = {get: "/v1/{id}/users"};
   }
 
   // AddORganizationUser adds a user to the organization with the given ID.
@@ -63,16 +55,12 @@ service OrganizationService {
 
   // RemoveOrganizationUser removes a user from the organization with the given ID.
   rpc RemoveOrganizationUser(RemoveOrganizationUserRequest) returns (RemoveOrganizationUserResponse) {
-    option (google.api.http) = {
-      delete: "/v1/{id}/users"
-    };
+    option (google.api.http) = {delete: "/v1/{id}/users"};
   }
 
   // IsInviteTokenValid checks if the given invite token is valid.
   rpc IsInviteTokenValid(IsInviteTokenValidRequest) returns (IsInviteTokenValidResponse) {
-    option (google.api.http) = {
-      post: "/v1/invite-token-validity/{token}"
-    };
+    option (google.api.http) = {post: "/v1/invite-token-validity/{token}"};
   }
 
   // AcceptInviteToken accepts the given invite token.
@@ -85,9 +73,7 @@ service OrganizationService {
 
   // GetInviteToken returns the invite token with the given ID.
   rpc GetInviteTokens(GetInviteTokensRequest) returns (GetInviteTokensResponse) {
-    option (google.api.http) = {
-      get: "/v1/{id}/invite-tokens"
-    };
+    option (google.api.http) = {get: "/v1/{id}/invite-tokens"};
   }
 }
 

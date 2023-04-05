@@ -11,15 +11,11 @@ option go_package = "github.com/polarsignals/polarsignals/gen/go/billing";
 service BillingService {
   // GetConfig returns the billing configuration.
   rpc GetConfig(GetConfigRequest) returns (GetConfigResponse) {
-    option (google.api.http) = {
-      get: "/v1/config"
-    };
+    option (google.api.http) = {get: "/v1/config"};
   }
 
   rpc GetSubscription(GetSubscriptionRequest) returns (GetSubscriptionResponse) {
-    option (google.api.http) = {
-      get: "/v1/subscriptions/{organization_id}"
-    };
+    option (google.api.http) = {get: "/v1/subscriptions/{organization_id}"};
   }
 
   // CreateSession creates a new billing session.
@@ -32,15 +28,21 @@ service BillingService {
 
   // GetInvoicesUpcoming returns the upcoming invoices.
   rpc GetInvoicesUpcoming(GetInvoicesUpcomingRequest) returns (GetInvoicesUpcomingResponse) {
-    option (google.api.http) = {
-      get: "/v1/invoices/upcoming/{organization_id}"
-    };
+    option (google.api.http) = {get: "/v1/invoices/upcoming/{organization_id}"};
   }
 
   // CancelSubscription cancels the subscription.
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
+    option (google.api.http) = {delete: "/v1/subscriptions/{organization_id}"};
+  }
+
+  rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse) {
+    option (google.api.http) = {get: "/v1/customers/{organization_id}"};
+  }
+  rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse) {
     option (google.api.http) = {
-      delete: "/v1/subscriptions/{organization_id}"
+      patch: "/v1/customers/{organization_id}"
+      body: "*"
     };
   }
 }
@@ -123,3 +125,29 @@ message CancelSubscriptionRequest {
 
 // CancelSubscriptionResponse is the response for the CancelSubscription method.
 message CancelSubscriptionResponse {}
+
+message GetCustomerRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message GetCustomerResponse {
+  // Customer name.
+  string customer_name = 1;
+
+  // Customer email.
+  string customer_email = 2;
+}
+
+message UpdateCustomerRequest {
+  // Organization ID.
+  string organization_id = 1;
+
+  // Customer name.
+  string customer_name = 2;
+
+  // Customer email.
+  string customer_email = 3;
+}
+
+message UpdateCustomerResponse {}

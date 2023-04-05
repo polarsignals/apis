@@ -11,9 +11,7 @@ option go_package = "github.com/polarsignals/polarsignals/gen/go/project";
 service ProjectService {
   // GetProjects returns the project with the given ID.
   rpc GetProjects(GetProjectsRequest) returns (GetProjectsResponse) {
-    option (google.api.http) = {
-      get: "/v1"
-    };
+    option (google.api.http) = {get: "/v1"};
   }
 
   // CreateProject creates a new project.
@@ -26,9 +24,7 @@ service ProjectService {
 
   // GetProject returns the project with the given ID.
   rpc GetProject(GetProjectRequest) returns (GetProjectResponse) {
-    option (google.api.http) = {
-      get: "/v1/{id}"
-    };
+    option (google.api.http) = {get: "/v1/{id}"};
   }
 
   // UpdateProject updates the project with the given ID.
@@ -41,16 +37,12 @@ service ProjectService {
 
   // DeleteProject deletes the project with the given ID.
   rpc DeleteProject(DeleteProjectRequest) returns (DeleteProjectResponse) {
-    option (google.api.http) = {
-      delete: "/v1/{id}"
-    };
+    option (google.api.http) = {delete: "/v1/{id}"};
   }
 
   // GetProjectTokens returns the tokens for the project with the given ID.
   rpc GetProjectTokens(GetProjectTokensRequest) returns (GetProjectTokensResponse) {
-    option (google.api.http) = {
-      get: "/v1/{id}/tokens"
-    };
+    option (google.api.http) = {get: "/v1/{id}/tokens"};
   }
 
   // CreateProjectToken creates a new token for the project with the given ID.
@@ -63,9 +55,7 @@ service ProjectService {
 
   // DeleteProjectToken deletes the token with the given ID.
   rpc DeleteProjectToken(DeleteProjectTokenRequest) returns (DeleteProjectTokenResponse) {
-    option (google.api.http) = {
-      delete: "/v1/{id}/tokens"
-    };
+    option (google.api.http) = {delete: "/v1/{id}/tokens"};
   }
 }
 
