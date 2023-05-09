@@ -65,6 +65,8 @@ message Project {
   string id = 1;
   // The name of the project.
   string name = 2;
+  // The ID of the organization this project belongs to.
+  string organization_id = 3;
 }
 
 // Organization represents an organization.
