@@ -4,6 +4,7 @@ package polarsignals.featureflag.v1alpha1;
 
 import "google/api/annotations.proto";
 import "polarsignals/user/v1alpha1/user.proto";
+import "polarsignals/organization/v1alpha1/organization.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/featureflag";
 
@@ -42,6 +43,26 @@ service FeatureFlagService {
   // DeleteFlag deletes a feature flag.
   rpc DeleteFlag(DeleteFlagRequest) returns (DeleteFlagResponse) {
     option (google.api.http) = {delete: "/v1/flags/{name}"};
+  }
+
+  // ListOrganizationFlags returns a list of available feature flags for organizations.
+  rpc ListOrganizationFlags(ListOrganizationFlagsRequest) returns (ListOrganizationFlagsResponse) {
+    option (google.api.http) = {get: "/v1/organizationflags"};
+  }
+
+  // ListOrganizations returns a list of organizations with feature flags.
+  rpc ListOrganizations(ListOrganizationsRequest) returns (ListOrganizationsResponse) {
+    option (google.api.http) = {get: "/v1/organizations"};
+  }
+
+  // AddOrganizationFlag adds a new feature flag to an organization.
+  rpc AddOrganizationFlag(AddOrganizationFlagRequest) returns (AddOrganizationFlagResponse) {
+    option (google.api.http) = {post: "/v1/organizations/{id}/{flag}"};
+  }
+
+  // RemoveOrganizationFlag removes a feature flag from an organization.
+  rpc RemoveOrganizationFlag(RemoveOrganizationFlagRequest) returns (RemoveOrganizationFlagResponse) {
+    option (google.api.http) = {delete: "/v1/organizations/{id}/{flag}"};
   }
 }
 
@@ -131,4 +152,53 @@ message ListUsersResponse {
   repeated polarsignals.user.v1alpha1.User users = 2;
   // the total number of users
   int32 total = 3;
+}
+
+// ListOrganizationsRequest is the request for the ListOrganizations method.
+message ListOrganizationsRequest {
+  // the token of the page that retrived
+  string page_token = 1;
+  // the number of items to return per page
+  int32 page_size = 2;
+}
+
+// ListOrganizationsResponse is the response for the ListOrganizations method.
+message ListOrganizationsResponse {
+  // pagination if empty no more pages exist
+  string next_page_token = 1;
+  // the list of organizations
+  repeated polarsignals.organization.v1alpha1.Organization organizations = 2;
+  // the total number of organizations
+  int32 total = 3;
+}
+
+// AddOrganizationFlagRequest is the request for the AddOrganizationFlag method.
+message AddOrganizationFlagRequest {
+  // id of the organization to add
+  string id = 1;
+  // flag to add to the organization
+  string flag = 2;
+}
+
+// AddOrganizationFlagResponse is the response for the AddOrganizationFlag method.
+message AddOrganizationFlagResponse {}
+
+// RemoveOrganizationFlagRequest is the request for the RemoveOrganizationFlag method.
+message RemoveOrganizationFlagRequest {
+  // id for the organization to remove the flag from
+  string id = 1;
+  // the feature flag name
+  string flag = 2;
+}
+
+// RemoveOrganizationFlagResponse is the response for the RemoveOrganizationFlag method.
+message RemoveOrganizationFlagResponse {}
+
+// ListOrganizationFlagsRequest is the request for the ListOrganizationFlags method.
+message ListOrganizationFlagsRequest {}
+
+// ListOrganizationFlagsResponse is the response for the ListOrganizationFlags method.
+message ListOrganizationFlagsResponse {
+  // the list of flags
+  repeated string flags = 1;
 }
