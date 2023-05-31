@@ -64,6 +64,7 @@ service FeatureFlagService {
   rpc RemoveOrganizationFlag(RemoveOrganizationFlagRequest) returns (RemoveOrganizationFlagResponse) {
     option (google.api.http) = {delete: "/v1/organizations/{id}/{flag}"};
   }
+
 }
 
 // ListFlagsRequest is the request for the ListFlags method.

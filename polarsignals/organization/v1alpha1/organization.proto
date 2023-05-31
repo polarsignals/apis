@@ -83,8 +83,10 @@ message Organization {
   string id = 1;
   // The name of the organization.
   string name = 2;
-  // the feature flags enabled for the user.
+  // the feature flags enabled for the organization.
   repeated string feature_flags = 3;
+  // the price id override for the organization.
+  string price_id = 4;
 }
 
 // InviteToken represents an invite token.
