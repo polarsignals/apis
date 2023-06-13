@@ -93,6 +93,8 @@ message CreateSessionRequest {
   string organization_id = 1;
   // Plan ID.
   string price_id = 2;
+  // redirect_to helps to determine where to redirect to after a successful subscription.
+  string redirect_to = 3;
 }
 
 // CreateSessionResponse is the response for the CreateSession method.
