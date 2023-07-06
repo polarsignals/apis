@@ -113,10 +113,16 @@ message GetInvoicesUpcomingRequest {
 message GetInvoicesUpcomingResponse {
   // Amount due of the upcoming invoice.
   int32 amount_due = 1;
-  // The value of the paid amount of the upcoming invoice.
-  int32 amount_paid = 2;
-  // The value of the unpaid amount of the upcoming invoice.
-  int32 amount_remaining = 3;
+  // Currency of the upcoming invoice.
+  string currency = 2;
+  // The start of the period of the upcoming invoice.
+  int32 period_start = 3;
+  // The end of the period of the upcoming invoice.
+  int32 period_end = 4;
+  // The quantity of the subscription item being paid for by this upcoming invoice.
+  int32 quantity = 5;
+  // The unit price of the subscription item being paid for by this upcoming invoice.
+  int32 unit_amount = 6;
 }
 
 // CancelSubscriptionRequest is the request for the CancelSubscription method.
