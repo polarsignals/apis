@@ -2,10 +2,47 @@
 version: v1
 deps:
   - remote: buf.build
+    owner: cncf
+    repository: xds
+    commit: 197fca8a74c54bc888e0ccf2da3b9f65
+    digest: shake256:cc68ed395f3531a8fa3a053a2c6f013fee057945a39b934aecdb3a204af7ea512da3e366b24ef72a9123985aeacb000291354799d8ac7dcb30e9907f30158110
+  - remote: buf.build
+    owner: envoyproxy
+    repository: envoy
+    commit: 3afde44c0a3a4c68806763a2e0a3e32b
+    digest: shake256:22819862cc0524a9c441338a811363fb844e9578dc97170bfba96d4d9e488f9ad7277c2fe1ed7de8fc1356496148df81c2c1f086b7bce113ba81cae35a034afd
+  - remote: buf.build
+    owner: envoyproxy
+    repository: protoc-gen-validate
+    commit: 6607b10f00ed4a3d98f906807131c44a
+    digest: shake256:acc7b2ededb2f88d296862943a003b157bdb68ec93ed13dcd8566b2d06e47993ea6daf12013b9655658aaf6bbdb141cf65bfe400ce2870f4654b0a5b45e57c09
+  - remote: buf.build
     owner: googleapis
     repository: googleapis
-    commit: 8d7204855ec14631a499bd7393ce1970
+    commit: cc916c31859748a68fd229a3c8d7a2e8
+    digest: shake256:469b049d0eb04203d5272062636c078decefc96fec69739159c25d85349c50c34c7706918a8b216c5c27f76939df48452148cff8c5c3ae77fa6ba5c25c1b8bf8
+  - remote: buf.build
+    owner: grpc
+    repository: grpc
+    commit: d8bc6b0fb32a4ff0bf249f2ec39e63d2
+    digest: shake256:265c5207544c8dd86dcddd50480cfd731448e07422c21a340b6195f6cb4be43392eba63d143c60f4ecebd1cf8d2b3ca045636b8ba06329c5521b486f0c5557ce
   - remote: buf.build
     owner: grpc-ecosystem
     repository: grpc-gateway
-    commit: bc28b723cd774c32b6fbc77621518765
+    commit: 11c9972ea0fd4c95a2c38d29bb1dc817
+    digest: shake256:9c7ce822dff52ad28714465396fbe98e879409677a61687b7dd9bb3d1484aa5d1704c013698b24f34c5d51023dbff47287ecd9676271953c25e646b42ebb76c5
+  - remote: buf.build
+    owner: opencensus
+    repository: opencensus
+    commit: 7e475551350545bda1ccb1e258c7b125
+    digest: shake256:22499ad9824a29151f38e3ea026166bd2258f1f1b40d11246cb80718bff5d4a7fecd47ef857f5cd98609d7847c93329f603a4e43348abd7ac1ead22a6a964b05
+  - remote: buf.build
+    owner: opentelemetry
+    repository: opentelemetry
+    commit: 547fa0c6b9254471b1c8a02f9c28577b
+    digest: shake256:9dca1e2f5107507a45e61c844b8b738bfbda7bd848d9e30e0622749d413a93137212ce778ca34b155bf9a9a18ce318dd8a854fa7e0675be0813df2627ba31861
+  - remote: buf.build
+    owner: prometheus
+    repository: client-model
+    commit: 55bcfe88c9e54edc9048a91656832525
+    digest: shake256:a507d3f983e7b8ca8b9a0527a8273eda8e8db6474c6712e1dacbfedb137c9b6f4c0fbbb8638b515183ac7e5e2281f84ec98840fabcf20fb2a2aa5b264891eb82
