@@ -4,6 +4,7 @@ package polarsignals.organization.v1alpha1;
 
 import "google/api/annotations.proto";
 import "polarsignals/user/v1alpha1/user.proto";
+import "google/protobuf/timestamp.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/organization";
 
@@ -75,6 +76,14 @@ service OrganizationService {
   rpc GetInviteTokens(GetInviteTokensRequest) returns (GetInviteTokensResponse) {
     option (google.api.http) = {get: "/v1/{id}/invite-tokens"};
   }
+
+  // ActivateFreeTrial activates the free trial for the organization with the given ID.
+  rpc ActivateFreeTrial(ActivateFreeTrialRequest) returns (ActivateFreeTrialResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/activate-free-trial"
+      body: "*"
+    };
+  }
 }
 
 // Organization represents an organization.
@@ -87,6 +96,8 @@ message Organization {
   repeated string feature_flags = 3;
   // the price id override for the organization.
   string price_id = 4;
+  // trial expiration date.
+  google.protobuf.Timestamp trial_ends_at = 5;
 }
 
 // InviteToken represents an invite token.
@@ -218,3 +229,12 @@ message GetInviteTokensResponse {
   // The invite tokens.
   repeated InviteToken invite_tokens = 1;
 }
+
+// ActivateFreeTrialRequest is the request for the ActivateFreeTrial method.
+message ActivateFreeTrialRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// ActivateFreeTrialResponse is the response for the ActivateFreeTrial method.
+message ActivateFreeTrialResponse {}
