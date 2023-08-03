@@ -84,6 +84,15 @@ service OrganizationService {
       body: "*"
     };
   }
+
+  // InviteUsersViaEmail invites users to the organization with the given email addresses.
+  rpc InviteUsersViaEmail(InviteUsersViaEmailRequest) returns (InviteUsersViaEmailResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/invite-users-via-email"
+      body: "*"
+    };
+  }
+
 }
 
 // Organization represents an organization.
@@ -238,3 +247,14 @@ message ActivateFreeTrialRequest {
 
 // ActivateFreeTrialResponse is the response for the ActivateFreeTrial method.
 message ActivateFreeTrialResponse {}
+
+// InviteUsersViaEmailRequest is the request for the InviteUsersViaEmail method.
+message InviteUsersViaEmailRequest {
+  // The ID of the organization.
+  string id = 1;
+  // The email addresses of the users.
+  repeated string emails = 2;
+}
+
+// InviteUsersViaEmailResponse is the response for the InviteUsersViaEmail method.
+message InviteUsersViaEmailResponse {}
