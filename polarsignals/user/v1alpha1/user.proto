@@ -21,6 +21,11 @@ service UserService {
       body: "*"
     };
   }
+
+  // ListSharedProfiles returns the list of profiles shared by the authenticated user.
+  rpc ListSharedProfiles(ListSharedProfilesRequest) returns (ListSharedProfilesResponse) {
+    option (google.api.http) = {get: "/v1/self/shared-profiles"};
+  }
 }
 
 // User represents a user.
@@ -58,3 +63,24 @@ message UpdateSelfRequest {
 
 // UpdateSelfResponse is the response for the UpdateSelf method.
 message UpdateSelfResponse {}
+
+message ListSharedProfilesRequest {}
+
+message SharedProfile {
+  // The unique identifier of the profile.
+  string id = 1;
+  // The pprof.me slug of the profile
+  string slug = 2;
+  // the description of the profile.
+  string description = 3;
+  // The user who created the profile.
+  string user_id = 4;
+  // The time when the profile was created.
+  google.protobuf.Timestamp created_at = 5;
+  // The time when the profile was last updated.
+  google.protobuf.Timestamp updated_at = 6;
+}
+
+message ListSharedProfilesResponse {
+  repeated SharedProfile shared_profiles = 1;
+}
