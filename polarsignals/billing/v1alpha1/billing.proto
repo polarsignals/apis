@@ -31,6 +31,11 @@ service BillingService {
     option (google.api.http) = {get: "/v1/invoices/upcoming/{organization_id}"};
   }
 
+  // GetInvoices returns the invoices.
+  rpc GetInvoices(GetInvoicesRequest) returns (GetInvoicesResponse) {
+    option (google.api.http) = {get: "/v1/invoices/{organization_id}"};
+  }
+
   // CancelSubscription cancels the subscription.
   rpc CancelSubscription(CancelSubscriptionRequest) returns (CancelSubscriptionResponse) {
     option (google.api.http) = {delete: "/v1/subscriptions/{organization_id}"};
@@ -123,6 +128,40 @@ message GetInvoicesUpcomingResponse {
   int32 quantity = 5;
   // The unit price of the subscription item being paid for by this upcoming invoice.
   int32 unit_amount = 6;
+}
+
+// GetInvoicesRequest is the request for the GetInvoices method.
+message GetInvoicesRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+// Invoice represents an invoice.
+message Invoice {
+  // Amount due of the upcoming invoice.
+  int32 amount_due = 1;
+  // Currency of the upcoming invoice.
+  string currency = 2;
+  // The start of the period of the upcoming invoice.
+  int32 period_start = 3;
+  // The end of the period of the upcoming invoice.
+  int32 period_end = 4;
+  // The quantity of the subscription item being paid for by this upcoming invoice.
+  int32 quantity = 5;
+  // The unit price of the subscription item being paid for by this upcoming invoice.
+  int32 unit_amount = 6;
+  // Number of the invoice.
+  string number = 7;
+  // Status of the invoice.
+  string status = 8;
+  // PDF of the invoice.
+  string invoice_pdf = 9;
+}
+
+// GetInvoicesResponse is the response for the GetInvoices method.
+message GetInvoicesResponse {
+  // Invoices.
+  repeated Invoice invoices = 1;
 }
 
 // CancelSubscriptionRequest is the request for the CancelSubscription method.
