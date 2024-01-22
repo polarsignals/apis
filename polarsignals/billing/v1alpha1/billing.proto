@@ -44,11 +44,17 @@ service BillingService {
   rpc GetCustomer(GetCustomerRequest) returns (GetCustomerResponse) {
     option (google.api.http) = {get: "/v1/customers/{organization_id}"};
   }
+
   rpc UpdateCustomer(UpdateCustomerRequest) returns (UpdateCustomerResponse) {
     option (google.api.http) = {
       patch: "/v1/customers/{organization_id}"
       body: "*"
     };
+  }
+
+  // GetCurrentUsage returns the current billing period's data usage metrics.
+  rpc GetCurrentUsage(GetCurrentUsageRequest) returns (GetCurrentUsageResponse) {
+    option (google.api.http) = {get: "/v1/usage/current/{organization_id}"};
   }
 }
 
@@ -198,3 +204,42 @@ message UpdateCustomerRequest {
 }
 
 message UpdateCustomerResponse {}
+
+// GetCurrentUsageRequest is the request for the GetCurrentUsage method.
+message GetCurrentUsageRequest {
+  // Organization ID.
+  string organization_id = 1;
+}
+
+message ProjectUsage {
+  // Project ID.
+  string project_id = 1;
+
+  // Project name.
+  string project_name = 2;
+
+  // Project usage.
+  int64 bytes = 3;
+}
+
+message MetricsItem {
+  // timestamp of the metrics.
+  google.protobuf.Timestamp timestamp = 1;
+
+  repeated ProjectUsage project_usage = 2;
+}
+
+message CurrentUsage {
+  // total usage.
+  int64 total_usage = 1;
+
+  // usage metrics.
+  repeated MetricsItem metrics = 2;
+}
+
+
+// GetCurrentUsageResponse is the response for the GetCurrentUsage method.
+message GetCurrentUsageResponse {
+  // Current usage.
+  CurrentUsage current_usage = 1;
+}
