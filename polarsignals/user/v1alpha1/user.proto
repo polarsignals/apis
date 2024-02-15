@@ -44,6 +44,8 @@ message User {
   google.protobuf.Timestamp updated_at = 6;
   // the feature flags enabled for the user.
   repeated string feature_flags = 7;
+  // Auth provider of the user.
+  string auth_provider = 8;
 }
 
 // GetSelfRequest is the request for the GetSelf method.

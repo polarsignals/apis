@@ -93,6 +93,32 @@ service OrganizationService {
     };
   }
 
+  // EnableSSO enables SSO for the organization with the given ID.
+  rpc EnableSSO(EnableSSORequest) returns (EnableSSOResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/enable-sso"
+      body: "*"
+    };
+  }
+
+  // DisableSSO disables SSO for the organization with the given ID.
+  rpc DisableSSO(DisableSSORequest) returns (DisableSSOResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/disable-sso"
+      body: "*"
+    };
+  }
+
+  // GetSSOSettings returns the SSO settings for the organization with the given ID.
+  rpc GetSSOSettings(GetSSOSettingsRequest) returns (GetSSOSettingsResponse) {
+    option (google.api.http) = {get: "/v1/{id}/sso-settings"};
+  }
+
+  // GetSSOConnectorId returns the SSO login URL for the organization with the given organization identifier.
+  rpc GetSSOConnectorId(GetSSOConnectorIdRequest) returns (GetSSOConnectorIdResponse) {
+    option (google.api.http) = {get: "/v1/sso-login-url/{organization_identifier}"};
+  }
+
 }
 
 // Organization represents an organization.
@@ -258,3 +284,69 @@ message InviteUsersViaEmailRequest {
 
 // InviteUsersViaEmailResponse is the response for the InviteUsersViaEmail method.
 message InviteUsersViaEmailResponse {}
+
+// EnableSSORequest is the request for the EnableSSO method.
+message EnableSSORequest {
+  // The ID of the organization.
+  string id = 1;
+  // The SSO settings.
+  SSOSettings sso_settings = 2;
+}
+
+// EnableSSOResponse is the response for the EnableSSO method.
+message EnableSSOResponse {}
+
+// DisableSSORequest is the request for the DisableSSO method.
+message DisableSSORequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// DisableSSOResponse is the response for the DisableSSO method.
+message DisableSSOResponse {}
+
+// GetSSOSettingsRequest is the request for the GetSSOSettings method.
+message GetSSOSettingsRequest {
+  // The ID of the organization.
+  string id = 1;
+}
+
+// GetSSOSettingsResponse is the response for the GetSSOSettings method.
+message GetSSOSettingsResponse {
+  // The SSO settings.
+  SSOSettings sso_settings = 1;
+}
+
+// SSOSettings represents the SSO settings.
+message SSOSettings {
+  // Organization identifier
+  string organization_identifier = 1;
+  // Type
+  string sso_type = 2;
+  oneof sso_config {
+    // OIDC configuration
+    OIDCConfig oidc_config = 3;
+  }
+}
+
+// OIDCConfig represents the OIDC configuration.
+message OIDCConfig {
+  // The issuer URL.
+  string issuer_url = 1;
+  // The client ID.
+  string client_id = 2;
+  // The client secret.
+  string client_secret = 3;
+}
+
+// GetSSOConnectorIdRequest is the request for the GetSSOConnectorId method.
+message GetSSOConnectorIdRequest {
+  // The organization identifier.
+  string organization_identifier = 1;
+}
+
+// GetSSOConnectorIdResponse is the response for the GetSSOConnectorId method.
+message GetSSOConnectorIdResponse {
+  // The Connector Id.
+  string connector_id = 1;
+}
