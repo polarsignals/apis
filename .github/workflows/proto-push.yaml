@@ -1,6 +1,7 @@
 name: proto-push
 
 on:
+  pull_request:
   push:
     branches:
     - main
@@ -50,5 +51,6 @@ jobs:
           # The 'main' branch of the GitHub repository that defines the module.
           against: 'https://github.com/${GITHUB_REPOSITORY}.git#branch=main,subdir=proto'
       - uses: bufbuild/buf-push-action@1b31b985d86807e150c3bef5c4ea451db812acd2 # tag=v1.0.1
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           buf_token: ${{ secrets.BUF_TOKEN }}
