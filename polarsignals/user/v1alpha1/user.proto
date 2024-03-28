@@ -4,6 +4,7 @@ package polarsignals.user.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/user";
 
@@ -26,6 +27,14 @@ service UserService {
   rpc ListSharedProfiles(ListSharedProfilesRequest) returns (ListSharedProfilesResponse) {
     option (google.api.http) = {get: "/v1/self/shared-profiles"};
   }
+
+  // UpdateProductTours updates the product tours completed for the user.
+  rpc UpdateUserProductTours(UpdateUserProductToursRequest) returns (UpdateUserProductToursResponse) {
+    option (google.api.http) = {
+      post: "/v1/users/{user_id}/product-tours"
+      body: "*"
+    };
+  }
 }
 
 // User represents a user.
@@ -46,6 +55,8 @@ message User {
   repeated string feature_flags = 7;
   // Auth provider of the user.
   string auth_provider = 8;
+  // the product tours completed for the user.
+  repeated string product_tours = 9;
 }
 
 // GetSelfRequest is the request for the GetSelf method.
@@ -86,3 +97,14 @@ message SharedProfile {
 message ListSharedProfilesResponse {
   repeated SharedProfile shared_profiles = 1;
 }
+
+// UpdateUserProductToursRequest is the request for the UpdateUserProductTours method.
+message UpdateUserProductToursRequest {
+  // The ID of the user.
+  string user_id = 1;
+  // The name of the tour.
+  string tour_name = 2;
+}
+
+// UpdateUserProductToursResponse is the response for the UpdateUserProductTours method.
+message UpdateUserProductToursResponse {}
