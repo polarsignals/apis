@@ -37,6 +37,14 @@ service UserService {
   }
 }
 
+// UserOrganizationRole represents the role of a user in an organization.
+message UserOrganizationRole {
+  // The unique identifier of the organization.
+  string organization_id = 1;
+  // The role of the user in the organization.
+  string role = 2;
+}
+
 // User represents a user.
 message User {
   // The unique identifier of the user.
@@ -57,6 +65,8 @@ message User {
   string auth_provider = 8;
   // the product tours completed for the user.
   repeated string product_tours = 9;
+  // the user's roles.
+  repeated UserOrganizationRole roles = 10;
 }
 
 // GetSelfRequest is the request for the GetSelf method.

@@ -119,6 +119,14 @@ service OrganizationService {
     option (google.api.http) = {get: "/v1/sso-login-url/{organization_identifier}"};
   }
 
+  // UpdateUserRole updates the role of the user with the given id for the given organization_id.
+  rpc UpdateUserRole(UpdateUserRoleRequest) returns (UpdateUserRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1/{organization_id}/users/{user_id}/role"
+      body: "*"
+    };
+  }
+
 }
 
 // Organization represents an organization.
@@ -350,3 +358,16 @@ message GetSSOConnectorIdResponse {
   // The Connector Id.
   string connector_id = 1;
 }
+
+// UpdateUserRoleRequest is the request for the UpdateUserRole method.
+message UpdateUserRoleRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The ID of the user.
+  string user_id = 2;
+  // The role of the user.
+  string role = 3;
+}
+
+// UpdateUserRoleResponse is the response for the UpdateUserRole method.
+message UpdateUserRoleResponse {}
