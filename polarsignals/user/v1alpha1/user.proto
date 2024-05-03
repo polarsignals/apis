@@ -67,6 +67,8 @@ message User {
   repeated string product_tours = 9;
   // the user's roles.
   repeated UserOrganizationRole roles = 10;
+  // the user's timezone.
+  string timezone = 11;
 }
 
 // GetSelfRequest is the request for the GetSelf method.
