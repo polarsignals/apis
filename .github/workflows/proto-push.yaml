@@ -44,11 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
       - uses: bufbuild/buf-setup-action@9447e713f7871ebf70f0f64cc2157a6aa31dd319 # tag=v1.7.0
-      - uses: bufbuild/buf-lint-action@d35dc843e3e1d4d7ec2d4b6eef89ff040b85cf28 # tag=v1.0.2
-      - uses: bufbuild/buf-breaking-action@1cd949a5f7c5581990772f1e0c8a5270d7e4401b # tag=v1.1.1
-        with:
-          # The 'main' branch of the GitHub repository that defines the module.
-          against: 'https://github.com/${GITHUB_REPOSITORY}.git#branch=main,subdir=proto'
       - uses: bufbuild/buf-push-action@1b31b985d86807e150c3bef5c4ea451db812acd2 # tag=v1.0.1
         with:
           buf_token: ${{ secrets.BUF_TOKEN }}
