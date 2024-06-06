@@ -141,6 +141,8 @@ message Organization {
   string price_id = 4;
   // trial expiration date.
   google.protobuf.Timestamp trial_ends_at = 5;
+  // is the organization using PO billing
+  bool is_po_billing = 6;
 }
 
 // InviteToken represents an invite token.
