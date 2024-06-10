@@ -81,6 +81,8 @@ message Card {
   int32 exp_year = 4;
 }
 
+message PoBilling {}
+
 // PaymentMethod represents a payment method of a subscription.
 message PaymentMethod {
   Card card = 1;
@@ -95,7 +97,10 @@ message GetSubscriptionResponse {
   string id = 1;
   string status = 2;
   google.protobuf.Timestamp created = 3;
-  PaymentMethod payment_method = 4;
+  oneof payment_method {
+    Card card = 4;
+    PoBilling po_billing = 5;
+  }
 }
 
 // CreateSessionRequest is the request for the CreateSession method.
