@@ -77,6 +77,8 @@ message Organization {
   string name = 2;
   // The projects of the organization.
   repeated Project projects = 3;
+  // Is PO billing organization.
+  bool is_po_billing = 4;
 }
 
 // Token represents a token.
