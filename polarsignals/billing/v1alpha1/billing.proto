@@ -93,6 +93,23 @@ message GetSubscriptionRequest {
   string organization_id = 1;
 }
 
+message Coupon {
+  // Coupon ID.
+  string id = 1;
+  // Coupon Name.
+  string name = 2;
+  // Discount Percent.
+  int32 percent_off = 3;
+  // Discount Amount.
+  int32 amount_off = 4;
+}
+
+message Discount {
+  oneof discount {
+    Coupon coupon = 1;
+  }
+}
+
 message GetSubscriptionResponse {
   string id = 1;
   string status = 2;
@@ -101,6 +118,7 @@ message GetSubscriptionResponse {
     Card card = 4;
     PoBilling po_billing = 5;
   }
+  Discount discount = 6;
 }
 
 // CreateSessionRequest is the request for the CreateSession method.
