@@ -4,6 +4,7 @@ package polarsignals.project.v1alpha1;
 
 import "google/api/annotations.proto";
 import "google/protobuf/timestamp.proto";
+import "polarsignals/project/v1alpha1/debuginfo.proto";
 
 option go_package = "github.com/polarsignals/polarsignals/gen/go/project";
 
@@ -56,6 +57,16 @@ service ProjectService {
   // DeleteProjectToken deletes the token with the given ID.
   rpc DeleteProjectToken(DeleteProjectTokenRequest) returns (DeleteProjectTokenResponse) {
     option (google.api.http) = {delete: "/v1/{id}/tokens"};
+  }
+
+  // GetProjectDebuginfos returns the debug infos for a given project.
+  rpc GetProjectDebuginfos(GetProjectDebuginfosRequest) returns (GetProjectDebuginfosResponse) {
+    option (google.api.http) = {get: "/v1/{project_id}/debuginfos"};
+  }
+
+  // GetProjectDebuginfosCount returns the count of debug infos for a given project.
+  rpc GetProjectDebuginfosCount(GetProjectDebuginfosCountRequest) returns (GetProjectDebuginfosCountResponse) {
+    option (google.api.http) = {get: "/v1/{project_id}/debuginfos/count"};
   }
 }
 

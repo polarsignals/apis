@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package polarsignals.project.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+import "parca/debuginfo/v1alpha1/debuginfo.proto";
+
+// GetProjectDebuginfosRequest is the request for GetProjectDebuginfos.
+message GetProjectDebuginfosRequest {
+  // The ID of the project to get debug infos for.
+  string project_id = 1;
+  // The build ID of the debug info.
+  optional string build_id = 2;
+  // the token of the page that retrived
+  string page_token = 3;
+  // the number of items to return per page
+  int32 page_size = 4;
+}
+
+// GetProjectDebuginfosResponse is the response for GetProjectDebuginfos.
+message GetProjectDebuginfosResponse {
+  // token of the next page for pagination if more pages exist
+  string next_page_token = 1;
+  // the list of debug infos
+  repeated Debuginfo debuginfos = 2;
+}
+
+// Source is the source of the debuginfo.
+enum Source {
+  // To understand when no source is set we have the unknown source.
+  SOURCE_UNKNOWN_UNSPECIFIED = 0;
+  // The debuginfo was uploaded by a user/agent.
+  SOURCE_UPLOAD = 1;
+  // The debuginfo is available from the configured debuginfod server(s).
+  SOURCE_DEBUGINFOD = 2;
+}
+
+// UploadState is the state of the debug info upload.
+enum UploadState {
+  // The state is unknown.
+  UPLOAD_STATE_UNKNOWN_UNSPECIFIED = 0;
+  // The debug info is being uploaded.
+  UPLOAD_STATE_UPLOADING = 1;
+  // The debug info has been uploaded.
+  UPLOAD_STATE_UPLOADED = 2;
+  // The debug info upload has failed.
+  UPLOAD_STATE_FAILED = 3;
+}
+
+// ProcessingState is the state of the debug info processing.
+enum ProcessingState {
+  // The state is unknown.
+  PROCESSING_STATE_UNKNOWN_UNSPECIFIED = 0;
+  // The debug info processing has errored.
+  PROCESSING_STATE_ERROR = 1;
+  // The debug info has been processed.
+  PROCESSING_STATE_SUCCESS = 2;
+  // The debug info optimization pending.
+  PROCESSING_STATE_OPTIMIZATION_PENDING = 3;
+}
+
+// Debuginfo is the details about a debug info file.
+message Debuginfo {
+  // The ID of the debug info.
+  string id = 1;
+  // The ID of the project the debug info belongs to.
+  string project_id = 2;
+  // The type of the debug info.
+  parca.debuginfo.v1alpha1.DebuginfoType type = 3;
+  // The build ID of the debug info.
+  string build_id = 4;
+  // The hash of the debug info.
+  string hash = 5;
+  // The source of the debug info.
+  Source source = 6;
+  // The debuginfod servers this piece of debuginfo is available at.
+  repeated string debuginfod_servers = 7;
+  // The state of the debug info upload.
+  UploadState upload_state = 8;
+  // created_at is the time the debug info was created.
+  google.protobuf.Timestamp created_at = 9;
+  // upload_started_at is the time the debug info upload was started.
+  google.protobuf.Timestamp upload_started_at = 10;
+  // upload_finished_at is the time the debug info upload was finished.
+  google.protobuf.Timestamp upload_finished_at = 11;
+  // has_error indicates if the debug info processing has errored.
+  ProcessingState processing_state = 12;
+  // quality_not_valid_elf indicates if the debug info is not a valid ELF file.
+  bool quality_not_valid_elf = 13;
+}
+
+// GetProjectDebuginfosCountRequest is the request for GetProjectDebuginfosCount.
+message GetProjectDebuginfosCountRequest {
+  // The ID of the project to get debug infos count for.
+  string project_id = 1;
+  // The build ID of the debug info.
+  optional string build_id = 2;
+}
+
+// GetProjectDebuginfosCountResponse is the response for GetProjectDebuginfosCount.
+message GetProjectDebuginfosCountResponse {
+  // The count of debug infos.
+  int32 count = 1;
+}
