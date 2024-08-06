@@ -39,13 +39,13 @@ enum Source {
 // UploadState is the state of the debug info upload.
 enum UploadState {
   // The state is unknown.
-  UPLOAD_STATE_UNKNOWN_UNSPECIFIED = 0;
+  STATE_UNKNOWN_UNSPECIFIED = 0;
   // The debug info is being uploaded.
-  UPLOAD_STATE_UPLOADING = 1;
+  STATE_UPLOADING = 1;
   // The debug info has been uploaded.
-  UPLOAD_STATE_UPLOADED = 2;
+  STATE_UPLOADED = 2;
   // The debug info upload has failed.
-  UPLOAD_STATE_FAILED = 3;
+  STATE_FAILED = 3;
 }
 
 // ProcessingState is the state of the debug info processing.
