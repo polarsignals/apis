@@ -88,6 +88,8 @@ message Debuginfo {
   ProcessingState processing_state = 12;
   // quality_not_valid_elf indicates if the debug info is not a valid ELF file.
   bool quality_not_valid_elf = 13;
+  // last_check_in is the time the debug info was last checked in.
+  google.protobuf.Timestamp last_check_in = 14;
 }
 
 // GetProjectDebuginfosCountRequest is the request for GetProjectDebuginfosCount.
