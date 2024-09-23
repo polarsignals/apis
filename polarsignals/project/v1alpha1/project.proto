@@ -68,6 +68,11 @@ service ProjectService {
   rpc GetProjectDebuginfosCount(GetProjectDebuginfosCountRequest) returns (GetProjectDebuginfosCountResponse) {
     option (google.api.http) = {get: "/v1/{project_id}/debuginfos/count"};
   }
+
+  // GetLoginConfigForProject returns the login config for a given project.
+  rpc GetLoginConfigForProject(GetLoginConfigForProjectRequest) returns (GetLoginConfigForProjectResponse) {
+    option (google.api.http) = {get: "/v1/{project_id}/login-config"};
+  }
 }
 
 // Project represents a project.
@@ -193,3 +198,23 @@ message DeleteProjectTokenRequest {
 
 // DeleteProjectTokenResponse is the response for the DeleteProjectToken method.
 message DeleteProjectTokenResponse {}
+
+// GetLoginConfigForProjectRequest is the request for the GetLoginConfigForProject method.
+message GetLoginConfigForProjectRequest {
+  // The ID of the project.
+  string project_id = 1;
+}
+
+// GetLoginConfigForProjectResponse is the response for the GetLoginConfigForProject method.
+message GetLoginConfigForProjectResponse {
+  // The login config.
+  LoginConfig login_config = 1;
+}
+
+// LoginConfig represents the login config for a project.
+message LoginConfig {
+  // Is SSO enabled.
+  bool is_sso_enabled = 1;
+  // The SSO identifier.
+  string sso_identifier = 2;
+}
