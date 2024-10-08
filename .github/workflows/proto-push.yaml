@@ -1,6 +1,7 @@
 name: proto-push
 
 on:
+  pull_request:
   push:
     branches:
     - main
@@ -45,5 +46,6 @@ jobs:
       - uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b # tag=v3.0.2
       - uses: bufbuild/buf-setup-action@9447e713f7871ebf70f0f64cc2157a6aa31dd319 # tag=v1.7.0
       - uses: bufbuild/buf-push-action@1b31b985d86807e150c3bef5c4ea451db812acd2 # tag=v1.0.1
+        if: ${{ github.event_name != 'pull_request' }}
         with:
           buf_token: ${{ secrets.BUF_TOKEN }}
