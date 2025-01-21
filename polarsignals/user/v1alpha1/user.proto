@@ -59,6 +59,8 @@ message User {
   google.protobuf.Timestamp created_at = 5;
   // The time when the user was last updated.
   google.protobuf.Timestamp updated_at = 6;
+  // The time when the user was last logged in.
+  google.protobuf.Timestamp last_login_at = 12;
   // the feature flags enabled for the user.
   repeated string feature_flags = 7;
   // Auth provider of the user.
