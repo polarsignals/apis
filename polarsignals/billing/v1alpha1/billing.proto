@@ -243,6 +243,9 @@ message ProjectUsage {
 
   // Project usage.
   int64 bytes = 3;
+
+  // Project usage in samples.
+  int64 samples = 4;
 }
 
 message MetricsItem {
