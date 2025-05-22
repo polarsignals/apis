@@ -90,6 +90,14 @@ message Debuginfo {
   bool quality_not_valid_elf = 13;
   // last_check_in is the time the debug info was last checked in.
   google.protobuf.Timestamp last_check_in = 14;
+  // last_optimization_error is the last error that occurred during optimization.
+  string last_optimization_error = 15;
+  // last_optimization_run_at is the time the last optimization was run.
+  google.protobuf.Timestamp last_optimization_run_at = 16;
+  // optimization_version is the version of the optimization.
+  int32 optimization_version = 17;
+  // errored_at_version is the version of the optimization that errored.
+  int32 errored_at_version = 18;
 }
 
 // GetProjectDebuginfosCountRequest is the request for GetProjectDebuginfosCount.
