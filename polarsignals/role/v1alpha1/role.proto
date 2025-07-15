@@ -1,0 +1,346 @@
+syntax = "proto3";
+
+package polarsignals.role.v1alpha1;
+
+import "google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/go/role";
+
+// RoleService provides the ability to manage roles and role bindings.
+service RoleService {
+  // ListRoles returns the roles for the organization.
+  rpc ListRoles(ListRolesRequest) returns (ListRolesResponse) {
+    option (google.api.http) = {get: "/v1/organizations/{organization_id}/roles"};
+  }
+
+  // CreateRole creates a new role.
+  rpc CreateRole(CreateRoleRequest) returns (CreateRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1/organizations/{organization_id}/roles"
+      body: "*"
+    };
+  }
+
+  // DeleteRole deletes the role with the given ID.
+  rpc DeleteRole(DeleteRoleRequest) returns (DeleteRoleResponse) {
+    option (google.api.http) = {delete: "/v1/organizations/{organization_id}/roles/{id}"};
+  }
+
+  // ListRoleBindings returns the role bindings for the organization.
+  rpc ListRoleBindings(ListRoleBindingsRequest) returns (ListRoleBindingsResponse) {
+    option (google.api.http) = {get: "/v1/organizations/{organization_id}/rolebindings"};
+  }
+
+  // CreateRoleBinding creates a new role binding.
+  rpc CreateRoleBinding(CreateRoleBindingRequest) returns (CreateRoleBindingResponse) {
+    option (google.api.http) = {
+      post: "/v1/organizations/{organization_id}/rolebindings"
+      body: "*"
+    };
+  }
+
+  // DeleteRoleBinding deletes the role binding with the given name.
+  rpc DeleteRoleBinding(DeleteRoleBindingRequest) returns (DeleteRoleBindingResponse) {
+    option (google.api.http) = {delete: "/v1/organizations/{organization_id}/rolebindings/{name}"};
+  }
+
+  // ListPermissions returns all available permissions in the system.
+  rpc ListPermissions(ListPermissionsRequest) returns (ListPermissionsResponse) {
+    option (google.api.http) = {get: "/v1/permissions"};
+  }
+
+  // ListInvites returns the invites for the organization.
+  rpc ListInvites(ListInvitesRequest) returns (ListInvitesResponse) {
+    option (google.api.http) = {get: "/v1/organizations/{organization_id}/invites"};
+  }
+
+  // CreateInvite creates a new invite.
+  rpc CreateInvite(CreateInviteRequest) returns (CreateInviteResponse) {
+    option (google.api.http) = {
+      post: "/v1/organizations/{organization_id}/invites"
+      body: "*"
+    };
+  }
+
+  // ExpireInvite expires an invite immediately.
+  rpc ExpireInvite(ExpireInviteRequest) returns (ExpireInviteResponse) {
+    option (google.api.http) = {
+      post: "/v1/organizations/{organization_id}/invites/{id}/expire"
+      body: "*"
+    };
+  }
+
+  // AcceptInvite accepts an invite using the token.
+  rpc AcceptInvite(AcceptInviteRequest) returns (AcceptInviteResponse) {
+    option (google.api.http) = {
+      post: "/v1/invites/{token}/accept"
+      body: "*"
+    };
+  }
+
+  // GetInviteDetails returns the details of an invite by token.
+  rpc GetInviteDetails(GetInviteDetailsRequest) returns (GetInviteDetailsResponse) {
+    option (google.api.http) = {get: "/v1/invites/{token}"};
+  }
+
+  // ListInviteAcceptances returns the acceptances for an invite.
+  rpc ListInviteAcceptances(ListInviteAcceptancesRequest) returns (ListInviteAcceptancesResponse) {
+    option (google.api.http) = {get: "/v1/organizations/{organization_id}/invites/{invite_id}/acceptances"};
+  }
+}
+
+// Role represents a role with a set of permissions.
+message Role {
+  // The ID of the role.
+  string id = 1;
+  // The name of the role.
+  string name = 2;
+  // The ID of the organization.
+  string organization_id = 3;
+  // The permissions granted by this role.
+  repeated string permissions = 4;
+  // Whether this is a system role that cannot be modified.
+  bool is_system = 5;
+  // The user or service account that created this role.
+  string created_by = 6;
+}
+
+// RoleBinding binds a role to a subject (user, service account, etc.).
+message RoleBinding {
+  // The ID of the role binding.
+  string id = 1;
+  // The name of the role binding.
+  string name = 2;
+  // The subject this role is bound to (e.g., "user:uuid", "serviceaccount:name").
+  string subject = 3;
+  // The ID of the organization.
+  string organization_id = 4;
+  // The optional ID of the project this binding is scoped to.
+  string project_id = 5;
+  // The optional entity this binding is scoped to.
+  string entity = 6;
+  // The opaque role reference (e.g., "<org-id>:<role-name>" or "system:<role-name>").
+  string role = 7;
+  // The user or service account that created this role binding.
+  string created_by = 8;
+}
+
+// ListRolesRequest is the request for the ListRoles method.
+message ListRolesRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+}
+
+// ListRolesResponse is the response for the ListRoles method.
+message ListRolesResponse {
+  // The roles.
+  repeated Role roles = 1;
+}
+
+// CreateRoleRequest is the request for the CreateRole method.
+message CreateRoleRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The name of the role.
+  string name = 2;
+  // The permissions for the role.
+  repeated string permissions = 3;
+}
+
+// CreateRoleResponse is the response for the CreateRole method.
+message CreateRoleResponse {
+  // The created role.
+  Role role = 1;
+}
+
+// DeleteRoleRequest is the request for the DeleteRole method.
+message DeleteRoleRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The ID of the role.
+  string id = 2;
+}
+
+// DeleteRoleResponse is the response for the DeleteRole method.
+message DeleteRoleResponse {}
+
+// ListRoleBindingsRequest is the request for the ListRoleBindings method.
+message ListRoleBindingsRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // Optional: filter by project ID.
+  string project_id = 2;
+}
+
+// ListRoleBindingsResponse is the response for the ListRoleBindings method.
+message ListRoleBindingsResponse {
+  // The role bindings.
+  repeated RoleBinding role_bindings = 1;
+}
+
+// CreateRoleBindingRequest is the request for the CreateRoleBinding method.
+message CreateRoleBindingRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The name of the role binding.
+  string name = 2;
+  // The subject this role should be bound to (e.g., "user:uuid", "serviceaccount:name").
+  string subject = 3;
+  // The optional ID of the project this binding is scoped to.
+  string project_id = 4;
+  // The optional entity this binding is scoped to.
+  string entity = 5;
+  // The opaque role reference (e.g., "<org-id>:<role-name>" or "system:<role-name>").
+  string role = 6;
+}
+
+// CreateRoleBindingResponse is the response for the CreateRoleBinding method.
+message CreateRoleBindingResponse {
+  // The created role binding.
+  RoleBinding role_binding = 1;
+}
+
+// DeleteRoleBindingRequest is the request for the DeleteRoleBinding method.
+message DeleteRoleBindingRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The name of the role binding.
+  string name = 2;
+}
+
+// DeleteRoleBindingResponse is the response for the DeleteRoleBinding method.
+message DeleteRoleBindingResponse {}
+
+// ListPermissionsRequest is the request for the ListPermissions method.
+message ListPermissionsRequest {}
+
+// ListPermissionsResponse is the response for the ListPermissions method.
+message ListPermissionsResponse {
+  // The available permissions.
+  repeated string permissions = 1;
+}
+
+// Invite represents an invitation to join an organization with a specific role.
+message Invite {
+  // The ID of the invite.
+  string id = 1;
+  // The ID of the organization.
+  string organization_id = 2;
+  // The ID of the role to assign.
+  string role_id = 3;
+  // The user or service account that created this invite.
+  string created_by = 4;
+  // The optional expiration time for the invite.
+  google.protobuf.Timestamp expires_at = 5;
+  // The creation time of the invite.
+  google.protobuf.Timestamp created_at = 6;
+  // The unique token for this invite.
+  string token = 7;
+  // The optional manual expiration time.
+  google.protobuf.Timestamp expired_at = 8;
+  // The user or service account that expired this invite.
+  string expired_by = 9;
+  // The role associated with this invite.
+  Role role = 10;
+  // The number of times this invite has been accepted.
+  int32 acceptance_count = 11;
+}
+
+// InviteAcceptance represents an acceptance of an invite.
+message InviteAcceptance {
+  // The ID of the acceptance.
+  string id = 1;
+  // The ID of the invite.
+  string invite_id = 2;
+  // The subject that accepted the invite.
+  string accepted_by = 3;
+  // The time the invite was accepted.
+  google.protobuf.Timestamp accepted_at = 4;
+  // The ID of the role binding created.
+  string role_binding_id = 5;
+}
+
+// ListInvitesRequest is the request for the ListInvites method.
+message ListInvitesRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+}
+
+// ListInvitesResponse is the response for the ListInvites method.
+message ListInvitesResponse {
+  // The invites.
+  repeated Invite invites = 1;
+}
+
+// CreateInviteRequest is the request for the CreateInvite method.
+message CreateInviteRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The ID of the role to assign.
+  string role_id = 2;
+  // The optional expiration time for the invite.
+  google.protobuf.Timestamp expires_at = 3;
+}
+
+// CreateInviteResponse is the response for the CreateInvite method.
+message CreateInviteResponse {
+  // The created invite.
+  Invite invite = 1;
+}
+
+// ExpireInviteRequest is the request for the ExpireInvite method.
+message ExpireInviteRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The ID of the invite.
+  string id = 2;
+}
+
+// ExpireInviteResponse is the response for the ExpireInvite method.
+message ExpireInviteResponse {
+  // The expired invite.
+  Invite invite = 1;
+}
+
+// AcceptInviteRequest is the request for the AcceptInvite method.
+message AcceptInviteRequest {
+  // The invite token.
+  string token = 1;
+}
+
+// AcceptInviteResponse is the response for the AcceptInvite method.
+message AcceptInviteResponse {
+  // The created role binding.
+  RoleBinding role_binding = 1;
+  // The acceptance record.
+  InviteAcceptance acceptance = 2;
+}
+
+// GetInviteDetailsRequest is the request for the GetInviteDetails method.
+message GetInviteDetailsRequest {
+  // The invite token.
+  string token = 1;
+}
+
+// GetInviteDetailsResponse is the response for the GetInviteDetails method.
+message GetInviteDetailsResponse {
+  // The invite details.
+  Invite invite = 1;
+  // The organization name.
+  string organization_name = 2;
+}
+
+// ListInviteAcceptancesRequest is the request for the ListInviteAcceptances method.
+message ListInviteAcceptancesRequest {
+  // The ID of the organization.
+  string organization_id = 1;
+  // The ID of the invite.
+  string invite_id = 2;
+}
+
+// ListInviteAcceptancesResponse is the response for the ListInviteAcceptances method.
+message ListInviteAcceptancesResponse {
+  // The acceptances.
+  repeated InviteAcceptance acceptances = 1;
+}

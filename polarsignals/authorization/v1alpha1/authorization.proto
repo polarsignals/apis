@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+package polarsignals.authorization.v1alpha1;
+
+import "google/api/annotations.proto";
+
+option go_package = "github.com/polarsignals/polarsignals/gen/proto/go/polarsignals/authorization/v1alpha1;authorizationpb";
+
+// AuthorizationService provides methods to check permissions for the authenticated entity.
+service AuthorizationService {
+  // CanI allows a client to check if they have a specific permission.
+  rpc CanI(CanIRequest) returns (CanIResponse) {
+    option (google.api.http) = {
+      post: "/api/v1alpha1/authorization/cani"
+      body: "*"
+    };
+  }
+}
+
+// CanIRequest is a request to check if the user has a specific permission.
+message CanIRequest {
+  // The organization ID to perform the permission check against.
+  string organization_id = 1;
+
+  // Optional project ID to scope the permission check.
+  // If not provided, checks for organization-wide permission.
+  string project_id = 2;
+
+  // The permission to check for (e.g., "project.read", "debuginfo.write").
+  string permission = 3;
+
+  // Optional entity to scope the permission check.
+  // Used for entity-specific permissions like serviceaccount.delete.
+  string entity = 4;
+}
+
+// CanIResponse contains the result of a permission check.
+message CanIResponse {
+  // Whether the user is allowed to perform the requested action.
+  bool allowed = 1;
+}
