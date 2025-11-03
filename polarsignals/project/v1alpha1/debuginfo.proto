@@ -46,6 +46,8 @@ enum UploadState {
   STATE_UPLOADED = 2;
   // The debug info upload has failed.
   STATE_FAILED = 3;
+  // The debug info has been purged from storage.
+  STATE_PURGED = 4;
 }
 
 // ProcessingState is the state of the debug info processing.
