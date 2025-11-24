@@ -95,6 +95,9 @@ message Organization {
   repeated Project projects = 3;
   // Is PO billing organization.
   bool is_po_billing = 4;
+  string po_number = 5;
+  float po_discount = 6;
+  float po_flat = 7;
 }
 
 // Token represents a token.

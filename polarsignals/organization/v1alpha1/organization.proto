@@ -143,6 +143,10 @@ message Organization {
   google.protobuf.Timestamp trial_ends_at = 5;
   // is the organization using PO billing
   bool is_po_billing = 6;
+
+  string po_number = 7;
+  float po_discount = 8;
+  float po_flat = 9;
 }
 
 // InviteToken represents an invite token.

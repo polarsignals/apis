@@ -102,6 +102,8 @@ message Coupon {
   int32 percent_off = 3;
   // Discount Amount.
   int32 amount_off = 4;
+  // Discount flat fee.
+  int32 amount_flat = 5;
 }
 
 message Discount {
