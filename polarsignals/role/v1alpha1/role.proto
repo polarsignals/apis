@@ -40,9 +40,9 @@ service RoleService {
     };
   }
 
-  // DeleteRoleBinding deletes the role binding with the given name.
+  // DeleteRoleBinding deletes the role binding with the given ID.
   rpc DeleteRoleBinding(DeleteRoleBindingRequest) returns (DeleteRoleBindingResponse) {
-    option (google.api.http) = {delete: "/v1/organizations/{organization_id}/rolebindings/{name}"};
+    option (google.api.http) = {delete: "/v1/organizations/{organization_id}/rolebindings/{id}"};
   }
 
   // ListPermissions returns all available permissions in the system.
@@ -110,9 +110,9 @@ message Role {
 message RoleBinding {
   // The ID of the role binding.
   string id = 1;
-  // The name of the role binding.
-  string name = 2;
-  // The subject this role is bound to (e.g., "user:uuid", "serviceaccount:name").
+  // Deprecated: The name of the role binding is no longer used.
+  string name = 2 [deprecated = true];
+  // The subject this role is bound to (e.g., "user:<oidc_provider>:<user_email>", "serviceaccount:name").
   string subject = 3;
   // The ID of the organization.
   string organization_id = 4;
@@ -183,9 +183,9 @@ message ListRoleBindingsResponse {
 message CreateRoleBindingRequest {
   // The ID of the organization.
   string organization_id = 1;
-  // The name of the role binding.
-  string name = 2;
-  // The subject this role should be bound to (e.g., "user:uuid", "serviceaccount:name").
+  // Deprecated: The name of the role binding is no longer used.
+  string name = 2 [deprecated = true];
+  // The subject this role is bound to (e.g., "user:<oidc_provider>:<user_email>", "serviceaccount:name").
   string subject = 3;
   // The optional ID of the project this binding is scoped to.
   string project_id = 4;
@@ -205,8 +205,10 @@ message CreateRoleBindingResponse {
 message DeleteRoleBindingRequest {
   // The ID of the organization.
   string organization_id = 1;
-  // The name of the role binding.
-  string name = 2;
+  // Deprecated: The name of the role binding is no longer used. Use id instead.
+  string name = 2 [deprecated = true];
+  // The ID of the role binding.
+  string id = 3;
 }
 
 // DeleteRoleBindingResponse is the response for the DeleteRoleBinding method.
