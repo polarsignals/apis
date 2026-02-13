@@ -351,6 +351,8 @@ message OIDCConfig {
   string client_id = 2;
   // The client secret.
   string client_secret = 3;
+  // Whether to request and pass through group memberships.
+  bool enable_groups = 4;
 }
 
 // GetSSOConnectorIdRequest is the request for the GetSSOConnectorId method.
