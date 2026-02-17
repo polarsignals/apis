@@ -127,6 +127,14 @@ service OrganizationService {
     };
   }
 
+  // UpdateSSODefaultRole updates the default role assigned to SSO users.
+  rpc UpdateSSODefaultRole(UpdateSSODefaultRoleRequest) returns (UpdateSSODefaultRoleResponse) {
+    option (google.api.http) = {
+      post: "/v1/{id}/sso-default-role"
+      body: "*"
+    };
+  }
+
 }
 
 // Organization represents an organization.
@@ -341,6 +349,8 @@ message SSOSettings {
     // OIDC configuration
     OIDCConfig oidc_config = 3;
   }
+  // Default role for SSO users (opaque role reference like "system:viewer" or "<org-id>:<role-name>")
+  string default_role = 4;
 }
 
 // OIDCConfig represents the OIDC configuration.
@@ -379,3 +389,14 @@ message UpdateUserRoleRequest {
 
 // UpdateUserRoleResponse is the response for the UpdateUserRole method.
 message UpdateUserRoleResponse {}
+
+// UpdateSSODefaultRoleRequest is the request for the UpdateSSODefaultRole method.
+message UpdateSSODefaultRoleRequest {
+  // The ID of the organization.
+  string id = 1;
+  // The default role for SSO users (opaque role string, empty to clear).
+  string default_role = 2;
+}
+
+// UpdateSSODefaultRoleResponse is the response for the UpdateSSODefaultRole method.
+message UpdateSSODefaultRoleResponse {}
